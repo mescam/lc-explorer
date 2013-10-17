@@ -1,5 +1,6 @@
 #ifndef ENGINE_H
 #define ENGINE_H
+
 #include <SFML/Graphics.hpp>
 
 class Engine {
@@ -19,8 +20,6 @@ class Engine {
 
         void createGameWindow();
         void mainLoop();
-
-
 };
 
 #endif
