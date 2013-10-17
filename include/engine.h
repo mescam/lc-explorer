@@ -10,7 +10,7 @@ class Engine {
         Engine& operator=(const Engine&);
         ~Engine() {};
 
-        sf::RenderWindow *window;
+        sf::RenderWindow window;
 
     public:
         static Engine& getInstance(){
