@@ -2,6 +2,7 @@
 
 void Engine::createGameWindow() {
     window.create(sf::VideoMode(900,600), "Trouble in Lecture Centre");
+    window.setFramerateLimit(60);
 }
 
 void Engine::mainLoop() {
@@ -16,4 +17,8 @@ void Engine::mainLoop() {
 
         window.display();
     }
+}
+
+sf::RenderWindow& Engine::getWindow() {
+    return window;
 }

@@ -1,4 +1,5 @@
 #include "engine.h"
+#include "splash.h"
 #include <iostream>
 
 #ifdef _MSC_VER
@@ -12,7 +13,8 @@
 
 int main() {
     Engine::getInstance().createGameWindow();
-
+    Splash s(Engine::getInstance());
+    s.animate();
     Engine::getInstance().mainLoop();
     return 0;
 }

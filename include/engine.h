@@ -20,6 +20,7 @@ class Engine {
 
         void createGameWindow();
         void mainLoop();
+        sf::RenderWindow& getWindow();
 };
 
 #endif
