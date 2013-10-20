@@ -13,8 +13,7 @@
 
 int main() {
     Engine::getInstance().createGameWindow();
-    Splash s(Engine::getInstance());
-    s.animate();
+    Engine::getInstance().welcomeAnimation();
     Engine::getInstance().mainLoop();
     return 0;
 }

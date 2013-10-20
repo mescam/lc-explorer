@@ -20,6 +20,7 @@ class Engine {
 
         void createGameWindow();
         void mainLoop();
+        void welcomeAnimation();
         sf::RenderWindow& getWindow();
 };
 
