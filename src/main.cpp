@@ -1,5 +1,4 @@
 #include "engine.h"
-#include "splash.h"
 #include <iostream>
 
 #ifdef _MSC_VER
@@ -12,8 +11,9 @@
 #endif
 
 int main() {
-    Engine::getInstance().createGameWindow();
-    Engine::getInstance().welcomeAnimation();
-    Engine::getInstance().mainLoop();
+    Engine app;
+    app.createGameWindow();
+    app.initializeManagers();
+    app.mainLoop();
     return 0;
 }

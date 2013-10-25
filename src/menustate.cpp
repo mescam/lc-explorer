@@ -15,3 +15,7 @@ void MenuState::handleEvents(sf::Event theEvent) {
 void MenuState::draw() {
 
 }
+
+MenuState::MenuState(Engine *_engine) {
+    engine = _engine;
+}

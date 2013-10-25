@@ -1,21 +1,27 @@
 #ifndef STATEMANAGER_H
 #define STATEMANAGER_H
 #include <vector>
-#include "state.h"
+enum class EState {
+    Splash = 0,
+    Menu,
+    Game,
+    Options,
+    End,
+    COUNT, //NOT A STATE!!!
+};
+
+class Engine;
+class IState;
+
 class StateManager {
     public:
+        StateManager(Engine *_engine);
         IState *getActiveState();
-        enum State {
-            SplashState = 0,
-            MenuState,
-            GameState,
-            OptionsState,
-            EndState,
-        };
-        void changeState(State _new);
+        void changeState(EState _new, bool pause = false);
     private:
         std::vector<IState*> states;
-        enum State active;
+        EState active;
+        Engine *engine;
 
 };
 

@@ -4,10 +4,12 @@
 #include <SFML/Graphics.hpp>
 
 class MenuState : public IState {
-    void init();
-    void deinit();
-    void handleEvents(sf::Event theEvent);
-    void draw();
+    public:
+        MenuState(Engine *_engine);
+        void init();
+        void deinit();
+        void handleEvents(sf::Event theEvent);
+        void draw();
 };
 
 #endif
