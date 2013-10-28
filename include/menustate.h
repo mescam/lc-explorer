@@ -10,6 +10,13 @@ class MenuState : public IState {
         void deinit();
         void handleEvents(sf::Event theEvent);
         void draw();
+
+    private:
+        sf::View view;
+        sf::Texture wallbackground;
+        sf::Sprite wall;
+        sf::Font titleFont;
+        sf::Text title;
 };
 
 #endif

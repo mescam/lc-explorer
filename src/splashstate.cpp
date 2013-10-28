@@ -4,7 +4,7 @@
 #include <iostream>
 
 void SplashState::init() {
-    font.loadFromFile("fonts/Grundschrift.ttf");
+    font.loadFromFile("fonts/Minecraftia.ttf");
 
     //gameTitle settings
     gameTitle.setFont(font);

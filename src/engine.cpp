@@ -8,7 +8,7 @@ void Engine::initializeManagers() {
 }
 
 void Engine::createGameWindow() {
-    window.create(sf::VideoMode(900,600), "Trouble in Lecture Center");
+    window.create(sf::VideoMode(900,600), "Trouble in Lecture Center", sf::Style::Close);
     window.setFramerateLimit(60);
 }
 
