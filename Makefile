@@ -8,7 +8,7 @@ SRCDIR	= src
 OBJDIR	= obj
 HEADIR	= include
 BINDIR	= bin
-TEXDIR	= tex
+TEXDIR	= doc
 TEXNAM	= report.tex
 
 SOURCES		:= $(wildcard $(SRCDIR)/*.cpp)
@@ -32,6 +32,7 @@ clean:
 	@echo "Cleaned working directory"
 
 tex:
+	@dot -Tpdf doc/uml/uml.dot > doc/uml/uml.pdf
 	@pdflatex -shell-escape -synctex=1 -interaction=nonstopmode -output-directory=$(TEXDIR) $(TEXDIR)/$(TEXNAM)
 	@echo "Compiled TeX file to PDF"
 
