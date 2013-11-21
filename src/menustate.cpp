@@ -1,11 +1,16 @@
 #include "menustate.h"
 #include "engine.h"
 #include "splash.h"
+#include "defaults.h"
+
 #include <SFML/Graphics.hpp>
+
 void MenuState::init() {
-    view.setCenter(900, 300);
+    currentMenuItem = 0;
+
+    view.setCenter(450, 300);
     view.setSize(900, 600);
-    wallbackground.loadFromFile("images/wall1.png");
+    wallbackground.loadFromFile("images/wall2.png");
     wall.setTexture(wallbackground);
 
     titleFont.loadFromFile("fonts/Minecraftia.ttf");
@@ -13,7 +18,12 @@ void MenuState::init() {
     title.setString("Trouble in Lecture Center");
     title.setCharacterSize(40);
     centerOrigin(title);
-    title.setPosition(450, 40);
+    title.setPosition(450, 50);
+
+    menuFont.loadFromFile("fonts/Minecraftia.ttf");
+    menuItem.setFont(menuFont);
+    menuItem.setCharacterSize(28);
+    menuItem.setPosition(450, 550);
 
     initialized = true;
 }
@@ -28,10 +38,34 @@ void MenuState::handleEvents(sf::Event theEvent) {
 
     switch(theEvent.key.code) {
         case sf::Keyboard::Left:
-            view.move(-10, 0);
+            if (currentMenuItem > 0) {
+                view.move(-450, 0);
+                currentMenuItem--;
+            }
             break;
         case sf::Keyboard::Right:
-            view.move(10, 0);
+            if (currentMenuItem < (sizeof(menuItems)/sizeof(menuItems[0]))-1) {
+                view.move(450, 0);
+                currentMenuItem++;
+            }
+            break;
+        case sf::Keyboard::Return: 
+            switch(currentMenuItem) {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    if (WRITE_TO_LOG) engine->getLogFile()->writeToLog("Exitting application");
+                    exit(0);            // tymczasowo, później to zmienić !!!
+                    break;                
+                default:
+                    break;
+            }
             break;
         default:
             break;
@@ -45,6 +79,11 @@ void MenuState::draw() {
 
     window.setView(engine->getWindow().getDefaultView());
     window.draw(title);
+
+    menuItem.setString(menuItems[currentMenuItem]);
+    centerOrigin(menuItem);
+    window.draw(menuItem);
+    
 }
 
 MenuState::MenuState(Engine *_engine) {
