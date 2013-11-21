@@ -1,15 +1,24 @@
 #include "engine.h"
 #include "statemanager.h"
 #include "state.h"
+#include "defaults.h"
+
 #include <iostream>
+
+Engine::Engine() {
+    if (WRITE_TO_LOG) {
+        logFile = new Log();
+    }
+}
+
 void Engine::initializeManagers() {
     statemanager = new StateManager(this);
     statemanager->getActiveState()->init();
 }
 
 void Engine::createGameWindow() {
-    window.create(sf::VideoMode(900,600), "Trouble in Lecture Center", sf::Style::Close);
-    window.setFramerateLimit(60);
+    window.create(sf::VideoMode(DEFAULT_WINDOW_X,DEFAULT_WINDOW_Y), DEFAULT_WINDOW_TITLE, sf::Style::Close);
+    window.setFramerateLimit(DEFAULT_FRAMERATE);
 }
 
 void Engine::mainLoop() {
@@ -32,4 +41,8 @@ void Engine::mainLoop() {
 
 sf::RenderWindow& Engine::getWindow() {
     return window;
+}
+
+Log* Engine::getLogFile() {
+    return logFile;
 }

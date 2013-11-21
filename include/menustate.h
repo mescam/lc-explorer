@@ -12,11 +12,15 @@ class MenuState : public IState {
         void draw();
 
     private:
+        unsigned short currentMenuItem;
+        std::string menuItems[5] = {"New game","Load game","Settings","About...","Exit"};
         sf::View view;
         sf::Texture wallbackground;
         sf::Sprite wall;
         sf::Font titleFont;
+        sf::Font menuFont;
         sf::Text title;
+        sf::Text menuItem;
 };
 
 #endif
