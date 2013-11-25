@@ -56,6 +56,8 @@ void SplashState::handleEvents(sf::Event theEvent) {
             this->changeState = true;
             this->newState = EState::Menu;
             break;
+        default:
+            break;
     }
 }
 
