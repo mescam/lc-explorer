@@ -10,7 +10,7 @@ void MenuState::init() {
 
     view.setCenter(450, 300);
     view.setSize(900, 600);
-    wallbackground.loadFromFile("images/wall2.png");
+    wallbackground.loadFromFile("images/wall3.png");
     wall.setTexture(wallbackground);
 
     titleFont.loadFromFile("fonts/Minecraftia.ttf");
