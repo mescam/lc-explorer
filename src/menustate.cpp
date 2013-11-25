@@ -49,20 +49,22 @@ void MenuState::handleEvents(sf::Event theEvent) {
                 currentMenuItem++;
             }
             break;
-        case sf::Keyboard::Return: 
+        case sf::Keyboard::Return:
             switch(currentMenuItem) {
-                case 0:
+                case 0: //new game
+                    this->changeState = true;
+                    this->newState = EState::Game;
                     break;
-                case 1:
+                case 1: //load
                     break;
-                case 2:
+                case 2: //settings
                     break;
-                case 3:
+                case 3: //about
                     break;
-                case 4:
+                case 4: //exit
                     if (WRITE_TO_LOG) engine->getLogFile()->writeToLog("Exitting application");
                     exit(0);            // tymczasowo, później to zmienić !!!
-                    break;                
+                    break;
                 default:
                     break;
             }
@@ -73,17 +75,17 @@ void MenuState::handleEvents(sf::Event theEvent) {
 }
 
 void MenuState::draw() {
-    sf::RenderWindow &window = engine->getWindow();
-    window.setView(view);
-    window.draw(wall);
+    sf::RenderWindow *window = engine->getWindow();
+    window->setView(view);
+    window->draw(wall);
 
-    window.setView(engine->getWindow().getDefaultView());
-    window.draw(title);
+    window->setView(window->getDefaultView());
+    window->draw(title);
 
     menuItem.setString(menuItems[currentMenuItem]);
     centerOrigin(menuItem);
-    window.draw(menuItem);
-    
+    window->draw(menuItem);
+
 }
 
 MenuState::MenuState(Engine *_engine) {

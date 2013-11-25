@@ -5,7 +5,7 @@
 
 #include "splashstate.h"
 #include "menustate.h"
-
+#include "gamestate.h"
 
 StateManager::StateManager(Engine *_engine) {
     engine = _engine;
@@ -13,6 +13,7 @@ StateManager::StateManager(Engine *_engine) {
     states.resize(int(EState::COUNT));
     states[0] = new SplashState(engine);
     states[1] = new MenuState(engine);
+    states[2] = new GameState(engine);
 }
 
 IState *StateManager::getActiveState() {

@@ -10,11 +10,11 @@ void SplashState::init() {
     gameTitle.setFont(font);
     gameTitle.setString("Trouble in Lecture Center");
     gameTitle.setCharacterSize(50);
-    centerObject(gameTitle, engine->getWindow().getSize());
+    centerObject(gameTitle, engine->getWindow()->getSize());
 
     sfmlImage.loadFromFile("images/sfml.png");
     sfmlLogo.setTexture(sfmlImage);
-    centerObject(sfmlLogo, engine->getWindow().getSize());
+    centerObject(sfmlLogo, engine->getWindow()->getSize());
 
     initialized = true;
 }
@@ -31,14 +31,15 @@ void SplashState::draw() {
     if (y < 0)
         y = 0;
     sf::Color c(255, 255, 255, int(y));
+    sf::RenderWindow *w = engine->getWindow();
     switch(screen) {
         case 0:
             gameTitle.setColor(c);
-            engine->getWindow().draw(gameTitle);
+            w->draw(gameTitle);
             break;
         case 1:
             sfmlLogo.setColor(c);
-            engine->getWindow().draw(sfmlLogo);
+            w->draw(sfmlLogo);
             break;
         default:
             this->changeState = true;

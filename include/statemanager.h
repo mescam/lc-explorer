@@ -5,6 +5,7 @@ enum class EState {
     Splash = 0,
     Menu,
     Game,
+    CreatePlayer,
     Options,
     End,
     COUNT, //NOT A STATE!!!

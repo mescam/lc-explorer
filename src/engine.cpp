@@ -39,8 +39,8 @@ void Engine::mainLoop() {
     }
 }
 
-sf::RenderWindow& Engine::getWindow() {
-    return window;
+sf::RenderWindow *Engine::getWindow() {
+    return &window;
 }
 
 Log* Engine::getLogFile() {

@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "state.h"
 
+
 class SplashState : public IState {
     public:
         SplashState(Engine *_engine);

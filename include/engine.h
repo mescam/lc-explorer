@@ -20,7 +20,7 @@ class Engine {
         void mainLoop();
         void initializeManagers();
         void welcomeAnimation();
-        sf::RenderWindow& getWindow();
+        sf::RenderWindow *getWindow();
         Log* getLogFile();
 };
 
