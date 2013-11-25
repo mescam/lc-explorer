@@ -48,7 +48,15 @@ void SplashState::draw() {
 }
 
 void SplashState::handleEvents(sf::Event theEvent) {
+    if(theEvent.type != sf::Event::KeyPressed)
+        return;
 
+    switch(theEvent.key.code) {
+        case sf::Keyboard::Escape:
+            this->changeState = true;
+            this->newState = EState::Menu;
+            break;
+    }
 }
 
 SplashState::SplashState(Engine *_engine) {
