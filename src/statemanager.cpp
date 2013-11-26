@@ -6,18 +6,26 @@
 #include "splashstate.h"
 #include "menustate.h"
 #include "gamestate.h"
+#include "aboutstate.h"
 
 StateManager::StateManager(Engine *_engine) {
     engine = _engine;
     active = EState::Splash;
     states.resize(int(EState::COUNT));
-    states[0] = new SplashState(engine);
-    states[1] = new MenuState(engine);
-    states[2] = new GameState(engine);
+
+    //loading states objects
+    states[int(EState::Splash)] = new SplashState(engine);
+    states[int(EState::Menu)] = new MenuState(engine);
+    states[int(EState::Game)] = new GameState(engine);
+    states[int(EState::About)] = new AboutState(engine);
 }
 
 IState *StateManager::getActiveState() {
     return states[int(active)];
+}
+
+IState *StateManager::getStateObject(EState get) {
+    return states[int(get)];
 }
 
 void StateManager::changeState(EState _new, bool pause) {

@@ -32,7 +32,10 @@ class IState {
             changeState = false;
             return newState;
         }
-
+        void setNewState(EState state) {
+            changeState = true;
+            newState = state;
+        }
     protected:
         bool initialized = false;
         bool paused = false;

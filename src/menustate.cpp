@@ -60,6 +60,7 @@ void MenuState::handleEvents(sf::Event theEvent) {
                 case 2: //settings
                     break;
                 case 3: //about
+                    setNewState(EState::About);
                     break;
                 case 4: //exit
                     if (WRITE_TO_LOG) engine->getLogFile()->writeToLog("Exitting application");

@@ -6,7 +6,9 @@ enum class EState {
     Menu,
     Game,
     CreatePlayer,
+    Load,
     Options,
+    About,
     End,
     COUNT, //NOT A STATE!!!
 };
@@ -18,6 +20,7 @@ class StateManager {
     public:
         StateManager(Engine *_engine);
         IState *getActiveState();
+        IState *getStateObject(EState get);
         void changeState(EState _new, bool pause = false);
     private:
         std::vector<IState*> states;
