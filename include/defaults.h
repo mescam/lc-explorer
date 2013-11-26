@@ -5,6 +5,7 @@
 #define DEFAULT_WINDOW_X        900
 #define DEFAULT_WINDOW_Y        600
 #define DEFAULT_FRAMERATE       60
+#define DEFAULT_FONT			"fonts/Minecraftia.ttf"
 
 #define WRITE_TO_LOG  true
 

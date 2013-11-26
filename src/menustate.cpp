@@ -20,7 +20,7 @@ void MenuState::init() {
     centerOrigin(title);
     title.setPosition(450, 50);
 
-    menuFont.loadFromFile("fonts/Minecraftia.ttf");
+    menuFont.loadFromFile(DEFAULT_FONT);
     menuItem.setFont(menuFont);
     menuItem.setCharacterSize(28);
     menuItem.setPosition(450, 550);
