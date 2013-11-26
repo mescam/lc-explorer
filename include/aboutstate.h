@@ -2,6 +2,7 @@
 #define ABOUTSTATE_H
 #include <SFML/Graphics.hpp>
 #include "state.h"
+#include <vector>
 
 class AboutState : public IState {
     public:
@@ -14,6 +15,8 @@ class AboutState : public IState {
     private:
     	sf::Texture *wall;
     	sf::Sprite *spriteWall;
+    	sf::Font *font;
+    	std::vector<sf::Text> desc;
 
 };
 
