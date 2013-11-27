@@ -53,7 +53,7 @@ void MenuState::handleEvents(sf::Event theEvent) {
             switch(currentMenuItem) {
                 case 0: //new game
                     this->changeState = true;
-                    this->newState = EState::Game;
+                    this->newState = EState::Intro;
                     break;
                 case 1: //load
                     break;

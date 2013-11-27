@@ -4,6 +4,7 @@
 enum class EState {
     Splash = 0,
     Menu,
+    Intro,
     Game,
     CreatePlayer,
     Load,

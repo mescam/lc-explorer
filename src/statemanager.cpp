@@ -7,6 +7,7 @@
 #include "menustate.h"
 #include "gamestate.h"
 #include "aboutstate.h"
+#include "introstate.h"
 
 StateManager::StateManager(Engine *_engine) {
     engine = _engine;
@@ -18,6 +19,7 @@ StateManager::StateManager(Engine *_engine) {
     states[int(EState::Menu)] = new MenuState(engine);
     states[int(EState::Game)] = new GameState(engine);
     states[int(EState::About)] = new AboutState(engine);
+    states[int(EState::Intro)] = new IntroState(engine);
 }
 
 IState *StateManager::getActiveState() {

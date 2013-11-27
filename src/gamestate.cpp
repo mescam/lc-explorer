@@ -29,8 +29,9 @@ bool GameState::load() {
     initialized = 1;
     paused = 1;
     //todo
+    return 0;
 }
 
 bool GameState::save() {
-
+    return 0;
 }
