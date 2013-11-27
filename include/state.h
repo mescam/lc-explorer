@@ -1,7 +1,9 @@
 #ifndef STATE_H
 #define STATE_H
+
 #include <SFML/Graphics.hpp>
 #include "statemanager.h"
+
 class Engine;
 
 class IState {
