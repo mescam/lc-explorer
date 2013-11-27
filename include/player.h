@@ -33,10 +33,14 @@ class Player: public Entity {
         short getAbilityScore(EAbilities a) {
             return abilities[a];
         }
+        short getExperience() {
+            return experience;
+        }
     private:
     protected:
         short health;
         short level = 1;
+        short experience;
         short energy;
         short abilities[6];
 };
