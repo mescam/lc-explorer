@@ -20,6 +20,7 @@ class IState;
 class StateManager {
     public:
         StateManager(Engine *_engine);
+        ~StateManager();
         IState *getActiveState();
         IState *getStateObject(EState get);
         void changeState(EState _new, bool pause = false);

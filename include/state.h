@@ -8,6 +8,9 @@ class Engine;
 
 class IState {
     public:
+        virtual ~IState() {
+
+        };
         //called after init
         virtual void init() {};
         //clean up

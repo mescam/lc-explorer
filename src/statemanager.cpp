@@ -8,6 +8,8 @@
 #include "gamestate.h"
 #include "aboutstate.h"
 #include "introstate.h"
+#include "createplayerstate.h"
+
 
 StateManager::StateManager(Engine *_engine) {
     engine = _engine;
@@ -20,6 +22,15 @@ StateManager::StateManager(Engine *_engine) {
     states[int(EState::Game)] = new GameState(engine);
     states[int(EState::About)] = new AboutState(engine);
     states[int(EState::Intro)] = new IntroState(engine);
+    states[int(EState::CreatePlayer)] = new CreatePlayerState(engine); 
+    //there is no memory leak above us.
+}
+
+StateManager::~StateManager() {
+    for(auto it = states.begin(); it != states.end(); ++it) {
+        delete *it;
+    }
+    states.clear();
 }
 
 IState *StateManager::getActiveState() {

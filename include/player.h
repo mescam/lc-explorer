@@ -3,6 +3,13 @@
 
 #include "entity.h"
 
+enum class EProfessions {
+    Archer = 0,
+    Mage,
+    Wizard,
+    COUNT //NOT A PROFESSION!
+};
+
 enum EAbilities {
     Strenght = 0,
     Dexterity,

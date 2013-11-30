@@ -19,7 +19,7 @@ void IntroState::init() {
     }
     file.close();
 
-    backgroundImg.loadFromFile("images/wall3.png"); // zmienić na inną grafikę !
+    backgroundImg.loadFromFile("images/wall_clean.png"); // zmienić na inną grafikę !
     background.setTexture(backgroundImg);
 
     font.loadFromFile("fonts/Minecraftia.ttf");
@@ -50,8 +50,7 @@ void IntroState::draw() {
         engine->getWindow()->draw(currentLine);
     } 
     else {
-        this->changeState = true;
-        this->newState = EState::Game;
+        setNewState(EState::CreatePlayer);
     }
     frameCount++;
 }
@@ -62,8 +61,7 @@ void IntroState::handleEvents(sf::Event theEvent) {
 
     switch(theEvent.key.code) {
         case sf::Keyboard::Escape:
-            this->changeState = true;
-            this->newState = EState::Game;
+            setNewState(EState::CreatePlayer);
             break;
         default:
             break;
