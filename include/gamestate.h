@@ -7,6 +7,8 @@
 
 class GameState : public IState {
     public:
+    	sf::Texture maskT;
+    	sf::Sprite maskS;
     	Level *lvl = NULL;
         GameState(Engine *_engine);
         void init();

@@ -7,6 +7,8 @@ GameState::GameState(Engine *_engine) {
 }
 
 void GameState::init() {
+	this->maskT.loadFromFile("images/light.png");
+	this->maskS.setTexture(this->maskT);
 	this->lvl = new Level("level1");
 	this->initialized = true;
 }
@@ -21,6 +23,7 @@ void GameState::handleEvents(sf::Event theEvent) {
 
 void GameState::draw() {
 	this->lvl->draw(this->engine->getWindow());
+	this->engine->getWindow()->draw(this->maskS);
 }
 
 bool GameState::load() {
