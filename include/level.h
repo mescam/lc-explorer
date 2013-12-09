@@ -7,6 +7,7 @@
 #include <string>
 #include <sstream>
 #include <map>
+#include <iostream>
 
 #include <SFML/Graphics.hpp>
 
@@ -49,7 +50,7 @@ public:
     void setMapSize(short width, short height);      // set map size (in tiles)
     short getMapWidth();
     short getMapHeight();
-    void draw();
+    void draw(sf::RenderWindow *w);
 private:
     short width;
     short height;

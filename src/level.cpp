@@ -14,7 +14,7 @@ void Level::loadLevel(std::string name) {
     std::string mapPath = "levels/" + name + '/' + name + ".map"; 
     std::string dataPath = "levels/" + name + '/' + name + ".dtb"; 
     // wczytać info o levelu
-
+    /*
     std::ifstream infoFile;
     infoFile.open(infoPath);
     if(infoFile.is_open()) {
@@ -24,12 +24,14 @@ void Level::loadLevel(std::string name) {
         return;
     }
     infoFile.close();
-
+    */
     // wczytać mapę
     std::ifstream mapFile;
     mapFile.open(mapPath);
     if(mapFile.is_open()) {
         mapFile >> this->width >> this->height;
+        
+        std::cerr << "wys: " << this->height << "    szer: " << this->width << std::endl;
 
         // utworzenie dynamicznej tablicy
         this->map = new Field* [width];
@@ -43,11 +45,18 @@ void Level::loadLevel(std::string name) {
                 map[i][j].id = -1;
             }
         }
+        std::cerr << "Utworzyłem mapę dynamiczną" << std::endl;
         // wczytanie grafiki mapy
         std::string temp;
-        getline(mapFile,temp);
+        //getline(mapFile,temp);
+        mapFile >> temp;
+                std::cerr << "nazwa pliku z grafika: " << temp << std::endl;
+
+        temp = "images/" + temp;
+        std::cerr << "ścieżka: " << temp << std::endl;
         if (!this->mapImage.loadFromFile(temp)) {
             // ERROR
+            
         }
         this->mapSprite.setTexture(this->mapImage);
         // wczytanie zawartości mapy
@@ -57,13 +66,13 @@ void Level::loadLevel(std::string name) {
             map[x][y].state = (FieldState)state;
             map[x][y].id = id;
         }
-        
+
     } else {
         // BŁĄD
         return;
     }
     mapFile.close();
-
+    /*
     // wczytanie elementów levelu
     std::ifstream dataFile;
     dataFile.open(dataPath);
@@ -117,7 +126,7 @@ void Level::loadLevel(std::string name) {
         // BŁĄD
     }
     dataFile.close();   
-
+    */
     this->loaded = true;
 }
 
@@ -142,11 +151,10 @@ short Level::getMapHeight() {
     return this->height;
 }
 
-void Level::draw() {
-    //sf::RenderWindow *w = engine->getWindow();
-    //w->draw(this->mapSprite);
-    if (this->gridVisible) {
+void Level::draw(sf::RenderWindow *w) {
+    w->draw(this->mapSprite);
+    /*if (this->gridVisible) {
         sf::Color c(255,255,255,128);
         
-    }
+    }*/
 }
