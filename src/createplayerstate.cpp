@@ -71,7 +71,7 @@ void CreatePlayerState::handleEvents(sf::Event theEvent) {
                 //sth;
                 if(name.empty())
                     return;
-
+                
                 //do sth about creating player
                 setNewState(EState::Game);
                 break;

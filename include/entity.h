@@ -8,7 +8,8 @@ class Entity {
     public:
         Entity(std::string name, std::string textureFilename): name(name) {
             sf::Texture eTexture;
-            eTexture.loadFromFile(textureFilename);
+            std::string texturePath = "images/" + textureFilename;
+            eTexture.loadFromFile(texturePath);
             primarySprite.setTexture(eTexture);            
         }
         virtual void draw() {};

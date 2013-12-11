@@ -8,7 +8,7 @@
 
 class HostileNPC {
     public:
-        HostileNPC(std::string name): NPC(name) {
+        HostileNPC(std::string name, short exp): NPC(name), experience(exp) {
             // tutaj wczytać dane przeciwnika z jakiegoś pliku czy coś?
         }
         short getExperience() {
@@ -19,8 +19,7 @@ class HostileNPC {
         }
     private:
     protected:
-        short EL;
-        short experience;   // to może być nie potrzebne
+        short experience;   // to może być niepotrzebne
         std::vector<Item> loot;
 };
 

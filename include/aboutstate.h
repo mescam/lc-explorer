@@ -1,7 +1,11 @@
 #ifndef ABOUTSTATE_H
 #define ABOUTSTATE_H
+
 #include <SFML/Graphics.hpp>
+
 #include "state.h"
+#include "defaults.h"
+
 #include <vector>
 
 class AboutState : public IState {

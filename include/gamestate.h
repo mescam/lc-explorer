@@ -7,6 +7,8 @@
 
 class GameState : public IState {
     public:
+        sf::Font *guiFont;
+        sf::Text guiText[10];
     	sf::Texture maskT;
     	sf::Sprite maskS;
     	Level *lvl = NULL;
