@@ -2,7 +2,7 @@
 #include "engine.h"
 #include "defaults.h"
 #include "splash.h"
-
+#include "gamestate.h"
 
 CreatePlayerState::CreatePlayerState(Engine *_engine) {
     engine = _engine;
@@ -67,22 +67,23 @@ void CreatePlayerState::handleEvents(sf::Event theEvent) {
     if(theEvent.type == sf::Event::KeyPressed) {
         switch(theEvent.key.code) {
             case sf::Keyboard::Return: {
-                //sth;
                 if(name.empty())
                     return;
-                // Player *player;
-                // switch(selectedProfession) {
-                //     case 0:
-                //         player = new CArcher(name);
-                //         break;
-                //     case 1:
-                //         player = new CMage(name);
-                //         break;
-                //     case 2:
-                //         player = new CKnight(name);
-                //         break;
-                // }
-                // engine->getStateManager()->getStateObject(EState::Game)->player = player;
+                class Player *player;
+                switch(selectedProfession) {
+                    case 0:
+                        player = new CArcher(name);
+                        break;
+                    case 1:
+                        player = new CMage(name);
+                        break;
+                    case 2:
+                        player = new CKnight(name);
+                        break;
+                }
+
+                //getStateObject returns IState*, so we have to reinterpret it.
+                reinterpret_cast<GameState*>(engine->getStateManager()->getStateObject(EState::Game))->player = player;
                 setNewState(EState::Game);
                 break;
             }

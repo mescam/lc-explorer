@@ -13,7 +13,7 @@ class GameState : public IState {
     	sf::Texture maskT;
     	sf::Sprite maskS;
     	Level *lvl = NULL;
-        // Player *player = NULL;
+        class Player *player = NULL;
         GameState(Engine *_engine);
         void init();
         void deinit();
@@ -22,6 +22,9 @@ class GameState : public IState {
 
         bool load();
         bool save();
+
+    protected:
+        void updatePlayerStatsString();
 };
 
 

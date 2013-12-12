@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include "entity.h"
+#include <string>
 
 enum class EProfessions {
     Archer = 0,
@@ -24,6 +25,7 @@ class Player: public Entity {
         Player(std::string name, std::string image): Entity(name,image) {
             
         }
+        virtual ~Player() {};
         virtual void levelUp() {};
         void increaseAbilityScore(EAbilities a) {
             abilities[a]++;
@@ -46,6 +48,14 @@ class Player: public Entity {
         short getExperience() {
             return experience;
         }
+        std::string getProfessionName() {
+            switch(int(profession)) {
+                case 0: return "Archer";
+                case 1: return "Mage";
+                case 2: return "Knight";
+            }
+            return "Unknown";
+        }
     private:
     protected:
         short maxHealth;
@@ -54,6 +64,8 @@ class Player: public Entity {
         short experience;
         short energy;
         short abilities[6];
+        EProfessions profession;
+        
 };
 
 class CArcher: public Player {
@@ -68,6 +80,7 @@ public:
 
         this->maxHealth = 8;
         this->health = this->maxHealth;
+        this->profession = EProfessions::Archer;
     }
 };
 
@@ -83,6 +96,7 @@ public:
 
         this->maxHealth = 6;
         this->health = this->maxHealth;
+        this->profession = EProfessions::Mage;
     }
 };
 
@@ -98,6 +112,7 @@ public:
 
         this->maxHealth = 10;
         this->health = this->maxHealth;
+        this->profession = EProfessions::Knight;
     }
 };
 

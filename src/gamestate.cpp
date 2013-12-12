@@ -2,6 +2,9 @@
 #include "defaults.h"
 #include "gamestate.h"
 #include <iostream>
+#include <cassert>
+
+#include <boost/lexical_cast.hpp>
 
 GameState::GameState(Engine *_engine) {
     engine = _engine;
@@ -18,54 +21,58 @@ void GameState::init() {
         this->guiText[i].setFont(*this->guiFont);
     }
 
-    this->guiText[0].setString("Aomi");
+    this->guiText[0].setString(this->player->getName());
     this->guiText[0].setColor(sf::Color(255,0,0,255));
     this->guiText[0].setCharacterSize(20);
     this->guiText[0].setPosition(10,10);
 
-    this->guiText[1].setString("Level 1 Mage");
+    // level and class
     this->guiText[1].setCharacterSize(20);
     this->guiText[1].setPosition(10,35);
 
-    this->guiText[2].setString("Health: 8/12");
+    //health
     this->guiText[2].setCharacterSize(18);
     this->guiText[2].setPosition(10,60);
 
-    this->guiText[3].setString("Experience: 122/200");
+    //experience
     this->guiText[3].setCharacterSize(18);
     this->guiText[3].setPosition(10,80);
 
-    this->guiText[4].setString("Strenght: 2");
+    //strenght
     this->guiText[4].setCharacterSize(14);
     this->guiText[4].setPosition(10,110);
 
-    this->guiText[5].setString("Dexterity: 5");
+    //dexterity
     this->guiText[5].setCharacterSize(14);
     this->guiText[5].setPosition(10,125);
 
-    this->guiText[6].setString("Constitution: 4");
+    //constitution
     this->guiText[6].setCharacterSize(14);
     this->guiText[6].setPosition(10,140);
 
-    this->guiText[7].setString("Intelligence: 2");
+    //intelligence
     this->guiText[7].setCharacterSize(14);
     this->guiText[7].setPosition(10,155);
 
-    this->guiText[8].setString("Wisdom: 1");
+    //wisdom
     this->guiText[8].setCharacterSize(14);
     this->guiText[8].setPosition(10,180);
 
-    this->guiText[9].setString("Charisma: 4");
+    //charisma
     this->guiText[9].setCharacterSize(14);
     this->guiText[9].setPosition(10,195);
 
-	this->lvl = new Level("level1");
+	if(this->lvl == NULL)
+        this->lvl = new Level("level1");
 
+    assert(this->player != NULL);
+    this->updatePlayerStatsString();
 	this->initialized = true;
 }
 
 void GameState::deinit() {
-
+    delete this->player;
+    delete this->lvl;
 }
 
 void GameState::handleEvents(sf::Event theEvent) {
@@ -125,4 +132,47 @@ bool GameState::load() {
 
 bool GameState::save() {
     return 0;
+}
+
+void GameState::updatePlayerStatsString() {
+    //level and class
+    this->guiText[1].setString("Level " 
+        + boost::lexical_cast<std::string>(this->player->getLevel())
+        + " "
+        + this->player->getProfessionName());
+
+    //health
+    this->guiText[2].setString("Health: "
+        + boost::lexical_cast<std::string>(this->player->getHealth())
+        + "/"
+        + boost::lexical_cast<std::string>(this->player->getMaxHealth())
+        );
+
+    //exp
+    this->guiText[3].setString("Exp: "
+        + boost::lexical_cast<std::string>(this->player->getExperience()));
+
+    //strenght
+    this->guiText[4].setString("Strenght: "
+        + boost::lexical_cast<std::string>(this->player->getAbilityScore(Strenght)));
+
+    //dexterity
+    this->guiText[5].setString("Dexterity: "
+        + boost::lexical_cast<std::string>(this->player->getAbilityScore(Dexterity)));
+
+    //contitution
+    this->guiText[6].setString("Constitution: "
+        + boost::lexical_cast<std::string>(this->player->getAbilityScore(Constitution)));
+
+    //inteligence
+    this->guiText[7].setString("Intelligence: "
+        + boost::lexical_cast<std::string>(this->player->getAbilityScore(Intelligence)));
+
+    //wisdom
+    this->guiText[8].setString("Wisdom: "
+        + boost::lexical_cast<std::string>(this->player->getAbilityScore(Wisdom)));
+
+    //charisma
+    this->guiText[9].setString("Charisma: "
+        + boost::lexical_cast<std::string>(this->player->getAbilityScore(Charisma)));
 }

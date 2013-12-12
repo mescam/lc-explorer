@@ -43,7 +43,7 @@ struct Field {
 class Level {
 public:
     Level(std::string name);
-    ~Level();
+    ~Level() {};
     void loadLevel(std::string name);
     bool isLoaded();
     void showGrid(bool visible);     // turn on/off grid on map
