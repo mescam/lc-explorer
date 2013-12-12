@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "state.h"
 #include "level.h"
+#include "player.h"
 
 class GameState : public IState {
     public:
@@ -12,6 +13,7 @@ class GameState : public IState {
     	sf::Texture maskT;
     	sf::Sprite maskS;
     	Level *lvl = NULL;
+        // Player *player = NULL;
         GameState(Engine *_engine);
         void init();
         void deinit();

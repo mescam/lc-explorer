@@ -46,3 +46,7 @@ sf::RenderWindow *Engine::getWindow() {
 Log* Engine::getLogFile() {
     return logFile;
 }
+
+StateManager* Engine::getStateManager() {
+    return statemanager;
+}

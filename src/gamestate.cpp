@@ -1,7 +1,6 @@
 #include "engine.h"
 #include "defaults.h"
 #include "gamestate.h"
-
 #include <iostream>
 
 GameState::GameState(Engine *_engine) {

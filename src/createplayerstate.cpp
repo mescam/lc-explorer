@@ -2,14 +2,13 @@
 #include "engine.h"
 #include "defaults.h"
 #include "splash.h"
-#include "player.h"
 
 
 CreatePlayerState::CreatePlayerState(Engine *_engine) {
     engine = _engine;
     professions.push_back("Archer");
     professions.push_back("Mage");
-    professions.push_back("Wizard");
+    professions.push_back("Knight");
 }
 
 void CreatePlayerState::init() {
@@ -71,8 +70,19 @@ void CreatePlayerState::handleEvents(sf::Event theEvent) {
                 //sth;
                 if(name.empty())
                     return;
-                
-                //do sth about creating player
+                // Player *player;
+                // switch(selectedProfession) {
+                //     case 0:
+                //         player = new CArcher(name);
+                //         break;
+                //     case 1:
+                //         player = new CMage(name);
+                //         break;
+                //     case 2:
+                //         player = new CKnight(name);
+                //         break;
+                // }
+                // engine->getStateManager()->getStateObject(EState::Game)->player = player;
                 setNewState(EState::Game);
                 break;
             }

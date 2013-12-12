@@ -6,7 +6,7 @@
 enum class EProfessions {
     Archer = 0,
     Mage,
-    Wizard,
+    Knight,
     COUNT //NOT A PROFESSION!
 };
 

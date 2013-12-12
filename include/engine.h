@@ -5,6 +5,7 @@
 
 #include <SFML/Graphics.hpp>
 
+
 class StateManager;
 
 class Engine {
@@ -22,6 +23,7 @@ class Engine {
         void welcomeAnimation();
         sf::RenderWindow *getWindow();
         Log* getLogFile();
+        StateManager *getStateManager();
 };
 
 #endif
