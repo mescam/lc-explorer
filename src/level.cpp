@@ -5,6 +5,10 @@ Level::Level() {
 
 Level::~Level() {
     delete view;
+    for(int i = 0; i < width; i++) {
+        delete[] map[i];
+    }
+    delete[] map;
 }
 
 Level::Level(std::string name, Entity *p) {
@@ -37,7 +41,7 @@ void Level::loadLevel(std::string name) {
     if(mapFile.is_open()) {
         mapFile >> this->width >> this->height;
         
-        std::cerr << "wys: " << this->height << "    szer: " << this->width << std::endl;
+        std::cerr << "h: " << this->height << "    w: " << this->width << std::endl;
 
         // utworzenie dynamicznej tablicy
         this->map = new Field* [width];
@@ -51,30 +55,42 @@ void Level::loadLevel(std::string name) {
                 map[i][j].id = -1;
             }
         }
-        std::cerr << "Utworzyłem mapę dynamiczną" << std::endl;
+        std::cerr << "Dynamic mape is created" << std::endl;
         // wczytanie grafiki mapy
         std::string temp;
         //getline(mapFile,temp);
         mapFile >> temp;
-                std::cerr << "nazwa pliku z grafika: " << temp << std::endl;
+                std::cerr << "graphics file: " << temp << std::endl;
 
         temp = "images/" + temp;
-        std::cerr << "ścieżka: " << temp << std::endl;
+        std::cerr << "path: " << temp << std::endl;
         if (!this->mapImage.loadFromFile(temp)) {
             // ERROR
             
         }
         this->mapSprite.setTexture(this->mapImage);
+        this->mapSprite.setPosition(-50, -50); //don't ask me why...
         // wczytanie zawartości mapy
         int x,y,state,id;
         while (!mapFile.eof()) {
             mapFile >> x >> y >> state >> id;
-            //std::cerr << x << " " << y << " " << state << " " << std::endl;
+            // std::cerr << x << " " << y << " " << state << " " << std::endl;
             map[x][y].state = (FieldState)state;
             map[x][y].id = id;
-            if(state == 2) {
-                std::cerr << "Found player on x=" << x << " y=" << y << std::endl;
-                player->setPosition(sf::Vector2f(x*50+20, y*50+20));
+
+            switch((FieldState)state) {
+                case Character: {
+                    player->setPosition(sf::Vector2f(x*50+20, y*50+20));
+                    break;
+                }
+                case Enemy: {
+                    std::cerr << "found enemy" << std::endl;
+
+                    break;
+                }
+                default: {
+                    break;
+                }
             }
         }
 
@@ -162,14 +178,31 @@ short Level::getMapHeight() {
     return this->height;
 }
 
-void Level::draw(sf::RenderWindow *w) {
+Field& Level::getMapField(int x, int y) {
+    return map[x][y];
+}
 
+void Level::draw(sf::RenderWindow *w) {
     //camera 2d
     w->setView(*view);
     view->setCenter(player->getPosition());
     this->player->getPrimarySprite().setPosition(player->getPosition());
     w->draw(this->mapSprite);
-    w->draw(this->player->getPrimarySprite());
+    this->player->draw(w);
+
+    //grid
+    // for(int x = 0; x < view->getSize().x; x+=50) {
+    //     sf::VertexArray lines(sf::LinesStrip, 2);
+    //     lines[0].position = sf::Vector2f(x, 0);
+    //     lines[1].position = sf::Vector2f(x, view->getSize().y);
+    //     w->draw(lines);
+    // }
+    // for(int y = 0; y < view->getSize().y; y+=50) {
+    //     sf::VertexArray lines(sf::LinesStrip, 2);
+    //     lines[0].position = sf::Vector2f(0, y);
+    //     lines[1].position = sf::Vector2f(view->getSize().x, y);
+    //     w->draw(lines);
+    // }
 
     //reset to default view
     w->setView(w->getDefaultView());

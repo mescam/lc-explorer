@@ -1,5 +1,7 @@
 #include "engine.h"
 #include <iostream>
+#include <ctime>
+#include <cstdlib>
 
 #ifdef _MSC_VER
 #pragma comment(lib,"sfml-audio.lib")
@@ -11,6 +13,7 @@
 #endif
 
 int main() {
+    srand(time(NULL));
     Engine app;
     app.createGameWindow();
     app.initializeManagers();

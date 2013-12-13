@@ -75,49 +75,88 @@ void GameState::init() {
 void GameState::deinit() {
     delete this->player;
     delete this->lvl;
+    this->lvl = NULL;
+    this->player = NULL;
+    this->initialized = false;
 }
 
 void GameState::handleEvents(sf::Event theEvent) {
-    if(theEvent.type != sf::Event::KeyPressed)
-        return;
-
-    switch(theEvent.key.code) {
-        case sf::Keyboard::W:
-            // ruch gracza do góry
-            break;
-        case sf::Keyboard::S:
-            // ruch gracza w dół
-            break;
-        case sf::Keyboard::A:
-            // ruch gracza w lewo
-            break;
-        case sf::Keyboard::D:
-            // ruch gracza w prawo
-            break;
-        case sf::Keyboard::Space:
-            // atak
-            break;
-        case sf::Keyboard::F5:
-            this->save();
-            break;
-        case sf::Keyboard::F6:
-            this->load();
-            break;
-        case sf::Keyboard::Escape:
-            setNewState(EState::Menu);
-            break;
-        default:
-            break;
+    if(theEvent.type == sf::Event::KeyPressed) {
+        switch(theEvent.key.code) {
+            case sf::Keyboard::W: // going up
+                player->motion.y = -1;
+                break;
+            case sf::Keyboard::S:
+                player->motion.y = 1;
+                break;
+            case sf::Keyboard::A:
+                player->motion.x = -1;
+                break;
+            case sf::Keyboard::D:
+                player->motion.x = 1;
+                break;
+            case sf::Keyboard::Space:
+                // atak
+                break;
+            case sf::Keyboard::F5:
+                this->save();
+                break;
+            case sf::Keyboard::Escape:
+                setNewState(EState::Menu);
+                break;
+            case sf::Keyboard::G:
+                std::cerr << "My position is (" << player->getPosition().x/50 << ", " <<
+                    player->getPosition().y/50 << ")" << std::endl;
+                break;
+            default:
+                break;
+        }
+    } else if(theEvent.type == sf::Event::KeyReleased) {
+        switch(theEvent.key.code) {
+            case sf::Keyboard::W: 
+                if(player->motion.y == -1) player->motion.y = 0;
+                break;
+            case sf::Keyboard::S: 
+                if(player->motion.y == 1) player->motion.y = 0;
+                break;
+            case sf::Keyboard::A: 
+                if(player->motion.x == -1) player->motion.x = 0;
+                break;
+            case sf::Keyboard::D: 
+                if(player->motion.x == 1) player->motion.x = 0;
+                break;
+            default:
+                break;
+        }
     }
 }
 
 void GameState::draw() {
+    // PLAYER MOTION LOGIC
+    // next position of character player
+    int nextX, nextY;
+    sf::Vector2f curPos = player->getPosition();
+    nextX = curPos.x + player->motion.x*CHAR_SPEED;
+    nextY = curPos.y + player->motion.y*CHAR_SPEED;
+    // std::cerr << nextX << " " << nextY << std::endl;
+    // std::cerr << lvl->getMapField(nextX/50, nextY/50).state << std::endl;
+    if(lvl->getMapField(nextX/50, nextY/50).state == Empty ||
+        lvl->getMapField(nextX/50, nextY/50).state == Character) {
+        // std::cerr << "is empty" << std::endl;
+        player->setPosition(sf::Vector2f(nextX, nextY));
+        lvl->getMapField(curPos.x/50, curPos.y/50).state = Empty;
+        lvl->getMapField(nextX/50, nextY/50).state = Character;
+    }
+
+
+
 	this->lvl->draw(this->engine->getWindow());
 	this->engine->getWindow()->draw(this->maskS);
 
+
+
     // draw some info about player, etc.
     for (int i = 0; i < 10; i++) {
-
         this->engine->getWindow()->draw(guiText[i]);
     }
 }

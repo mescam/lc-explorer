@@ -9,4 +9,6 @@
 
 #define WRITE_TO_LOG  true
 
+#define CHAR_SPEED              2
+
 #endif // DEFAULTS_H

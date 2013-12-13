@@ -56,6 +56,22 @@ class Player: public Entity {
             }
             return "Unknown";
         }
+        void setPosition(sf::Vector2f p) {
+            position = p;
+            if(motion.x == 1) {
+                primarySprite.setTextureRect(sf::IntRect(40*(int(p.x/30)%3), 40, 40, 40));
+            }
+            if(motion.x == -1) {
+                primarySprite.setTextureRect(sf::IntRect(40*(int(p.x/30)%3), 120, 40, 40));
+            }
+            if(motion.y == 1) {
+                primarySprite.setTextureRect(sf::IntRect(40*(int(p.y/30)%3), 0, 40, 40));
+            }
+            if(motion.y == -1) {
+                primarySprite.setTextureRect(sf::IntRect(40*(int(p.y/30)%3), 80, 40, 40));
+            }
+        }
+        sf::Vector2f motion;
     private:
     protected:
         short maxHealth;
@@ -65,6 +81,7 @@ class Player: public Entity {
         short energy;
         short abilities[6];
         EProfessions profession;
+
         
 };
 

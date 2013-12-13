@@ -21,11 +21,14 @@ class Entity {
         sf::Sprite& getPrimarySprite() {
             return primarySprite;
         }
-        void setPosition(sf::Vector2f p) {
+        virtual void setPosition(sf::Vector2f p) {
             position = p;
         }
         sf::Vector2f getPosition() {
             return position;
+        }
+        void draw(sf::RenderWindow *w) {
+            w->draw(primarySprite);
         }
     private:
     protected:

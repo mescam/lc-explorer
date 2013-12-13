@@ -50,6 +50,7 @@ public:
     void setMapSize(short width, short height);      // set map size (in tiles)
     short getMapWidth();
     short getMapHeight();
+    Field& getMapField(int x, int y);
     void draw(sf::RenderWindow *w);
     Entity *player = NULL;
 private:
