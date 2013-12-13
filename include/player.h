@@ -23,7 +23,7 @@ enum EAbilities {
 class Player: public Entity {
     public:
         Player(std::string name, std::string image): Entity(name,image) {
-            
+            primarySprite.setTextureRect(sf::Rect<int>(0, 0, 40, 40));
         }
         virtual ~Player() {};
         virtual void levelUp() {};

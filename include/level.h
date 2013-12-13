@@ -42,8 +42,8 @@ struct Field {
 
 class Level {
 public:
-    Level(std::string name);
-    ~Level() {};
+    Level(std::string name, Entity *p);
+    ~Level();
     void loadLevel(std::string name);
     bool isLoaded();
     void showGrid(bool visible);     // turn on/off grid on map
@@ -51,6 +51,7 @@ public:
     short getMapWidth();
     short getMapHeight();
     void draw(sf::RenderWindow *w);
+    Entity *player = NULL;
 private:
     short width;
     short height;
@@ -61,6 +62,7 @@ private:
 
     Field** map;
     std::map<int,Entity*> mapElements;
+    sf::View *view;
     
     Level();
 protected:

@@ -1,11 +1,17 @@
 #include "level.h"
 
 Level::Level() {
-
 }
 
-Level::Level(std::string name) {
+Level::~Level() {
+    delete view;
+}
+
+Level::Level(std::string name, Entity *p) {
+    player = p;
+    view = new sf::View();
     this->loadLevel(name);
+    view->setSize(900, 600);
 }
 
 void Level::loadLevel(std::string name) {
@@ -63,8 +69,13 @@ void Level::loadLevel(std::string name) {
         int x,y,state,id;
         while (!mapFile.eof()) {
             mapFile >> x >> y >> state >> id;
+            //std::cerr << x << " " << y << " " << state << " " << std::endl;
             map[x][y].state = (FieldState)state;
             map[x][y].id = id;
+            if(state == 2) {
+                std::cerr << "Found player on x=" << x << " y=" << y << std::endl;
+                player->setPosition(sf::Vector2f(x*50+20, y*50+20));
+            }
         }
 
     } else {
@@ -152,9 +163,14 @@ short Level::getMapHeight() {
 }
 
 void Level::draw(sf::RenderWindow *w) {
+
+    //camera 2d
+    w->setView(*view);
+    view->setCenter(player->getPosition());
+    this->player->getPrimarySprite().setPosition(player->getPosition());
     w->draw(this->mapSprite);
-    /*if (this->gridVisible) {
-        sf::Color c(255,255,255,128);
-        
-    }*/
+    w->draw(this->player->getPrimarySprite());
+
+    //reset to default view
+    w->setView(w->getDefaultView());
 }

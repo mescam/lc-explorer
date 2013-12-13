@@ -60,11 +60,14 @@ void GameState::init() {
     //charisma
     this->guiText[9].setCharacterSize(14);
     this->guiText[9].setPosition(10,195);
+    
+    assert(this->player != NULL);
 
 	if(this->lvl == NULL)
-        this->lvl = new Level("level1");
+        this->lvl = new Level("level1", player);
 
-    assert(this->player != NULL);
+
+    //this->lvl->player = this->player;
     this->updatePlayerStatsString();
 	this->initialized = true;
 }
