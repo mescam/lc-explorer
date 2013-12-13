@@ -4,7 +4,6 @@
 #include <iostream>
 #include <cassert>
 
-#include <boost/lexical_cast.hpp>
 
 GameState::GameState(Engine *_engine) {
     engine = _engine;
@@ -137,42 +136,42 @@ bool GameState::save() {
 void GameState::updatePlayerStatsString() {
     //level and class
     this->guiText[1].setString("Level " 
-        + boost::lexical_cast<std::string>(this->player->getLevel())
+        + std::to_string(this->player->getLevel())
         + " "
         + this->player->getProfessionName());
 
     //health
     this->guiText[2].setString("Health: "
-        + boost::lexical_cast<std::string>(this->player->getHealth())
+        + std::to_string(this->player->getHealth())
         + "/"
-        + boost::lexical_cast<std::string>(this->player->getMaxHealth())
+        + std::to_string(this->player->getMaxHealth())
         );
 
     //exp
     this->guiText[3].setString("Exp: "
-        + boost::lexical_cast<std::string>(this->player->getExperience()));
+        + std::to_string(this->player->getExperience()));
 
     //strenght
     this->guiText[4].setString("Strenght: "
-        + boost::lexical_cast<std::string>(this->player->getAbilityScore(Strenght)));
+        + std::to_string(this->player->getAbilityScore(Strenght)));
 
     //dexterity
     this->guiText[5].setString("Dexterity: "
-        + boost::lexical_cast<std::string>(this->player->getAbilityScore(Dexterity)));
+        + std::to_string(this->player->getAbilityScore(Dexterity)));
 
     //contitution
     this->guiText[6].setString("Constitution: "
-        + boost::lexical_cast<std::string>(this->player->getAbilityScore(Constitution)));
+        + std::to_string(this->player->getAbilityScore(Constitution)));
 
     //inteligence
     this->guiText[7].setString("Intelligence: "
-        + boost::lexical_cast<std::string>(this->player->getAbilityScore(Intelligence)));
+        + std::to_string(this->player->getAbilityScore(Intelligence)));
 
     //wisdom
     this->guiText[8].setString("Wisdom: "
-        + boost::lexical_cast<std::string>(this->player->getAbilityScore(Wisdom)));
+        + std::to_string(this->player->getAbilityScore(Wisdom)));
 
     //charisma
     this->guiText[9].setString("Charisma: "
-        + boost::lexical_cast<std::string>(this->player->getAbilityScore(Charisma)));
+        + std::to_string(this->player->getAbilityScore(Charisma)));
 }
