@@ -61,7 +61,7 @@ class Player: public Entity {
         short maxHealth;
         short health;
         short level = 1;
-        short experience;
+        short experience = 0;
         short energy;
         short abilities[6];
         EProfessions profession;
