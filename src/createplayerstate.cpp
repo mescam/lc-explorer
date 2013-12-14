@@ -83,7 +83,7 @@ void CreatePlayerState::handleEvents(sf::Event theEvent) {
                 }
 
                 //getStateObject returns IState*, so we have to reinterpret it.
-                reinterpret_cast<GameState*>(engine->getStateManager()->getStateObject(EState::Game))->player = player;
+                dynamic_cast<GameState*>(engine->getStateManager()->getStateObject(EState::Game))->player = player;
                 setNewState(EState::Game);
                 break;
             }

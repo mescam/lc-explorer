@@ -9,7 +9,7 @@
 #include "aboutstate.h"
 #include "introstate.h"
 #include "createplayerstate.h"
-
+#include "endstate.h"
 
 StateManager::StateManager(Engine *_engine) {
     engine = _engine;
@@ -23,6 +23,7 @@ StateManager::StateManager(Engine *_engine) {
     states[int(EState::About)] = new AboutState(engine);
     states[int(EState::Intro)] = new IntroState(engine);
     states[int(EState::CreatePlayer)] = new CreatePlayerState(engine); 
+    states[int(EState::End)] = new EndState(engine);
     //there is no memory leak above us.
 }
 

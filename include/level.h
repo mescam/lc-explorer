@@ -38,6 +38,7 @@ public:
     short getMapHeight();
     Field& getMapField(int x, int y);
     void draw(sf::RenderWindow *w);
+    bool isFinished();
     Entity *player = NULL;
     Field** map;
 private:

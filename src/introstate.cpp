@@ -19,7 +19,7 @@ void IntroState::init() {
     }
     file.close();
 
-    backgroundImg.loadFromFile("images/wall_clean.png"); // zmienić na inną grafikę !
+    backgroundImg.loadFromFile("images/wall_clean.png"); 
     background.setTexture(backgroundImg);
 
     font.loadFromFile("fonts/Minecraftia.ttf");

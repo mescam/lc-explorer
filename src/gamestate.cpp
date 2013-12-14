@@ -1,6 +1,7 @@
 #include "engine.h"
 #include "defaults.h"
 #include "gamestate.h"
+#include "endstate.h"
 #include <iostream>
 #include <cassert>
 
@@ -142,18 +143,14 @@ void GameState::draw() {
     sf::Vector2f curPos = player->getPosition();
     nextX = curPos.x + player->motion.x*CHAR_SPEED;
     nextY = curPos.y + player->motion.y*CHAR_SPEED;
-    // std::cerr << nextX << " " << nextY << std::endl;
-    // std::cerr << lvl->getMapField(nextX/50, nextY/50).state << std::endl;
     if(lvl->getMapField(nextX/50, nextY/50).state == Empty ||
         lvl->getMapField(nextX/50, nextY/50).state == Character) {
-        // std::cerr << "is empty" << std::endl;
         player->setPosition(sf::Vector2f(nextX, nextY));
         lvl->getMapField(curPos.x/50, curPos.y/50).state = Empty;
         lvl->getMapField(nextX/50, nextY/50).state = Character;
     }
 
-
-
+    // draw level elements and light mask
 	this->lvl->draw(this->engine->getWindow());
 	this->engine->getWindow()->draw(this->maskS);
 
@@ -161,6 +158,15 @@ void GameState::draw() {
     this->updatePlayerStatsString();
     for (int i = 0; i < 10; i++) {
         this->engine->getWindow()->draw(guiText[i]);
+    }
+
+    //end game conditions
+    if(lvl->isFinished()) {
+        dynamic_cast<EndState*>(engine->getStateManager()->getStateObject(EState::End))->setWinner(true);
+        setNewState(EState::End);
+    } else if(player->getHealth() <= 0) {
+        dynamic_cast<EndState*>(engine->getStateManager()->getStateObject(EState::End))->setWinner(false);
+        setNewState(EState::End);
     }
 }
 

@@ -104,6 +104,10 @@ bool Level::isLoaded() {
     return this->loaded;
 }
 
+bool Level::isFinished() {
+    return mapElements.empty();
+}
+
 void Level::showGrid(bool visible) {
     this->gridVisible = visible;
 }
