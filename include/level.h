@@ -19,21 +19,6 @@ enum FieldState {
     Item = 4
 };
 
-enum EntityType {
-    Key = 0,
-    Scroll,
-    Herb,
-    Armor,
-    Weapon,
-    Shield,
-    Ring,
-    Jewel,
-    Chest,
-    FriendlyNPC,
-    Mob,
-    Boss,
-    Player
-};
 
 struct Field {
     FieldState state;
@@ -64,7 +49,7 @@ private:
     sf::Sprite mapSprite;
     std::vector<Entity*> mapElements;
     sf::View *view;
-    
+    int counter = 0;
     Level();
 protected:
 };

@@ -4,7 +4,7 @@
 #include "entity.h"
 #include <string>
 #include "level.h"
-#include "hostilenpc.h"
+
 
 enum class EProfessions {
     Archer = 0,
@@ -24,9 +24,7 @@ enum EAbilities {
 
 class Player: public Entity {
     public:
-        Player(std::string name, std::string image): Entity(name,image) {
-            primarySprite.setTextureRect(sf::Rect<int>(0, 0, 40, 40));
-        }
+        Player(std::string name, std::string image);
         virtual ~Player() {};
         virtual void levelUp() {};
         void increaseAbilityScore(EAbilities a) {
@@ -37,6 +35,9 @@ class Player: public Entity {
         }
         short getHealth() {
             return health;
+        }
+        void setHealth(int x) {
+            health = x;
         }
         short getLevel() {
             return level;
@@ -50,14 +51,8 @@ class Player: public Entity {
         short getExperience() {
             return experience;
         }
-        std::string getProfessionName() {
-            switch(int(profession)) {
-                case 0: return "Archer";
-                case 1: return "Mage";
-                case 2: return "Knight";
-            }
-            return "Unknown";
-        }
+        std::string getProfessionName();
+
         void setPosition(sf::Vector2f p) {
             position = p;
             primarySprite.setPosition(position);
@@ -103,46 +98,7 @@ public:
         this->profession = EProfessions::Archer;
     }
 
-    void attack(Field **map) {
-        int x = position.x/50;
-        int y = position.y/50;
-        switch(lookingDirection) {
-            case 1:
-                y--;
-                while(map[x][y].state != Obstacle) {
-                    if(map[x][y].state == Enemy) break;
-                    y--;
-                }
-                break;
-            case 2:
-                x++;
-                while(map[x][y].state != Obstacle) {
-                    if(map[x][y].state == Enemy) break;
-                    x++;
-                }
-                break;
-            case 3:
-                y++;
-                while(map[x][y].state != Obstacle) {
-                    if(map[x][y].state == Enemy) break;
-                    y++;
-                }
-                break;
-            case 4:
-                x--;
-                while(map[x][y].state != Obstacle) {
-                    if(map[x][y].state == Enemy) break;
-                    x--;
-                }
-                break;
-        }
-        if(map[x][y].state == Enemy) {
-            HostileNPC *e = dynamic_cast<HostileNPC*>(map[x][y].entity);
-            e->setHealth(e->getHealth() - 10);
-            if(e->getHealth() <= 0)
-                experience += 10;
-        }
-    }
+    void attack(Field **map);
 };
 
 class CMage: public Player {
@@ -160,46 +116,7 @@ public:
         this->profession = EProfessions::Mage;
     }
 
-    void attack(Field **map) {
-        int x = position.x/50;
-        int y = position.y/50;
-        switch(lookingDirection) {
-            case 1:
-                y--;
-                while(map[x][y].state != Obstacle) {
-                    if(map[x][y].state == Enemy) break;
-                    y--;
-                }
-                break;
-            case 2:
-                x++;
-                while(map[x][y].state != Obstacle) {
-                    if(map[x][y].state == Enemy) break;
-                    x++;
-                }
-                break;
-            case 3:
-                y++;
-                while(map[x][y].state != Obstacle) {
-                    if(map[x][y].state == Enemy) break;
-                    y++;
-                }
-                break;
-            case 4:
-                x--;
-                while(map[x][y].state != Obstacle) {
-                    if(map[x][y].state == Enemy) break;
-                    x--;
-                }
-                break;
-        }
-        if(map[x][y].state == Enemy) {
-            HostileNPC *e = dynamic_cast<HostileNPC*>(map[x][y].entity);
-            e->setHealth(e->getHealth() - 10);
-            if(e->getHealth() <= 0)
-                experience += 10;
-        }
-    }
+    void attack(Field **map);
 };
 
 class CKnight: public Player {
@@ -217,21 +134,7 @@ public:
         this->profession = EProfessions::Knight;
     }
 
-    virtual void attack(Field **map) {
-        for(int i=-1; i <= 1; i++) {
-            for(int j=-1; j <= 1; j++) {
-                int x = int(position.x/50)+i;
-                int y = int(position.y/50)+j;
-                if(map[x][y].state == Enemy) {
-                    HostileNPC *e = dynamic_cast<HostileNPC*>(map[x][y].entity);
-                    e->setHealth(e->getHealth()-10);
-                    if(e->getHealth() <= 0) {
-                        this->experience += 10;
-                    }
-                }
-            }
-        }
-    }
+    void attack(Field **map);
 };
 
 #endif // PLAYER_H

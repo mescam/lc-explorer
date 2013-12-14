@@ -133,6 +133,7 @@ void Level::draw(sf::RenderWindow *w) {
     w->draw(this->mapSprite);
     // draw player
     this->player->draw(w);
+    Player *p = dynamic_cast<Player*>(player);
     // draw other entities
     HostileNPC *npc;
     std::vector<std::vector<Entity*>::iterator> toRemove; //oh god...
@@ -144,14 +145,25 @@ void Level::draw(sf::RenderWindow *w) {
                 map[x][y].state = Empty;
                 map[x][y].entity = NULL;
                 toRemove.push_back(it);
+            } else {
+                // std::cerr << "NPC interacts" << std::endl;
+                npc->interact(p, map);
             }
-        }
+        } 
         (*it)->draw(w);
     }
     
     //remove dead entities
     for(auto it : toRemove) {
         mapElements.erase(it);
+    }
+
+    //add health every one second
+    counter++;
+    if(counter == 60) {
+        if(p->getHealth() < p->getMaxHealth())
+            p->setHealth(p->getHealth()+1);
+        counter = 0;
     }
 
     //grid

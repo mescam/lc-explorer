@@ -35,7 +35,7 @@ class Entity {
         virtual void draw(sf::RenderWindow *w) {
             w->draw(primarySprite);
         }
-        virtual void interact() {}
+      
         // virtual void getHealth() {
         //     return 10;
         // }
