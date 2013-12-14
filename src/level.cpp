@@ -1,4 +1,8 @@
 #include "level.h"
+#include "hostilenpc.h"
+#include "player.h"
+
+#include <vector>
 
 Level::Level() {
 }
@@ -55,7 +59,7 @@ void Level::loadLevel(std::string name) {
                 map[i][j].id = -1;
             }
         }
-        std::cerr << "Dynamic mape is created" << std::endl;
+        std::cerr << "Dynamic map is created" << std::endl;
         // wczytanie grafiki mapy
         std::string temp;
         //getline(mapFile,temp);
@@ -72,20 +76,28 @@ void Level::loadLevel(std::string name) {
         this->mapSprite.setPosition(-50, -50); //don't ask me why...
         // wczytanie zawartości mapy
         int x,y,state,id;
+        class Player *playerptr = reinterpret_cast<class Player*>(player);
         while (!mapFile.eof()) {
             mapFile >> x >> y >> state >> id;
             // std::cerr << x << " " << y << " " << state << " " << std::endl;
             map[x][y].state = (FieldState)state;
             map[x][y].id = id;
+            map[x][y].entity = NULL;
 
             switch((FieldState)state) {
                 case Character: {
-                    player->setPosition(sf::Vector2f(x*50+20, y*50+20));
+                    player->setPositionOnMap(x, y);
                     break;
                 }
                 case Enemy: {
                     std::cerr << "found enemy" << std::endl;
-
+                    HostileNPC *enemy = new HostileNPC(
+                        "Professor",
+                        20,
+                        "prof" + std::to_string(rand()%7 + 1) + ".png");
+                    enemy->setPositionOnMap(x, y);
+                    mapElements.push_back(enemy);
+                    map[x][y].entity = enemy;
                     break;
                 }
                 default: {
@@ -99,61 +111,6 @@ void Level::loadLevel(std::string name) {
         return;
     }
     mapFile.close();
-    /*
-    // wczytanie elementów levelu
-    std::ifstream dataFile;
-    dataFile.open(dataPath);
-    if(dataFile.is_open()) {
-        std::string line;
-        while (!dataFile.eof()) {
-            getline(dataFile,line);
-            if (line.length() != 0 && line[0] != ';') {
-                std::stringstream lineStream(line);
-                int id, type;
-                std::string name, texture;
-                lineStream >> id >> type >> name >> texture;
-                switch (type) {
-                    case Key:
-
-                            
-                        break;
-                    case Scroll:
-                        break;
-                    case Herb:
-                        break;
-                    case Armor:
-                        break;
-                    case Weapon:
-                        break;
-                    case Shield:
-                        break;
-                    case Ring:
-                        break;
-                    case Jewel:
-                        break;
-                    case Chest:
-                        break;
-                    case FriendlyNPC:
-                        break;
-                    case Mob:
-                        break;
-                    case Boss:
-                        break;
-                    case Player:
-                        break;
-                    default:
-                        break;
-                }
-            } else {
-                 continue;
-            }
-        }  
-    } else {
-        return;
-        // BŁĄD
-    }
-    dataFile.close();   
-    */
     this->loaded = true;
 }
 
@@ -186,9 +143,30 @@ void Level::draw(sf::RenderWindow *w) {
     //camera 2d
     w->setView(*view);
     view->setCenter(player->getPosition());
-    this->player->getPrimarySprite().setPosition(player->getPosition());
+    // this->player->getPrimarySprite().setPosition(player->getPosition());
     w->draw(this->mapSprite);
+    // draw player
     this->player->draw(w);
+    // draw other entities
+    HostileNPC *npc;
+    std::vector<std::vector<Entity*>::iterator> toRemove; //oh god...
+    for(auto it = mapElements.begin(); it != mapElements.end(); it++) {
+        npc = dynamic_cast<HostileNPC*>(*it);
+        if(npc != NULL) {
+            if(npc->getHealth() <= 0) {
+                int x = npc->getPosition().x/50, y = npc->getPosition().y/50;
+                map[x][y].state = Empty;
+                map[x][y].entity = NULL;
+                toRemove.push_back(it);
+            }
+        }
+        (*it)->draw(w);
+    }
+    
+    //remove dead entities
+    for(auto it : toRemove) {
+        mapElements.erase(it);
+    }
 
     //grid
     // for(int x = 0; x < view->getSize().x; x+=50) {

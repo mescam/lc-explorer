@@ -96,7 +96,7 @@ void GameState::handleEvents(sf::Event theEvent) {
                 player->motion.x = 1;
                 break;
             case sf::Keyboard::Space:
-                // atak
+                player->attack(this->lvl->map);
                 break;
             case sf::Keyboard::F5:
                 this->save();
@@ -153,9 +153,8 @@ void GameState::draw() {
 	this->lvl->draw(this->engine->getWindow());
 	this->engine->getWindow()->draw(this->maskS);
 
-
-
     // draw some info about player, etc.
+    this->updatePlayerStatsString();
     for (int i = 0; i < 10; i++) {
         this->engine->getWindow()->draw(guiText[i]);
     }

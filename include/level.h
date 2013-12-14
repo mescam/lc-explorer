@@ -6,7 +6,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-#include <map>
+#include <vector>
 #include <iostream>
 
 #include <SFML/Graphics.hpp>
@@ -38,6 +38,7 @@ enum EntityType {
 struct Field {
     FieldState state;
     int id;
+    Entity *entity;
 };
 
 class Level {
@@ -53,6 +54,7 @@ public:
     Field& getMapField(int x, int y);
     void draw(sf::RenderWindow *w);
     Entity *player = NULL;
+    Field** map;
 private:
     short width;
     short height;
@@ -60,9 +62,7 @@ private:
     bool loaded = false;
     sf::Texture mapImage;
     sf::Sprite mapSprite;
-
-    Field** map;
-    std::map<int,Entity*> mapElements;
+    std::vector<Entity*> mapElements;
     sf::View *view;
     
     Level();

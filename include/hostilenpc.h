@@ -1,26 +1,27 @@
 #ifndef HOSTILE_NPC_H
 #define HOSTILE_NPC_H
 
-#include "NPC.h"
+#include "npc.h"
 #include "item.h"
 
 #include <vector>
 
-class HostileNPC {
+class HostileNPC : public NPC {
     public:
-        HostileNPC(std::string name, short exp): NPC(name), experience(exp) {
-            // tutaj wczytać dane przeciwnika z jakiegoś pliku czy coś?
+        HostileNPC(std::string name, short exp, std::string image): NPC(name, image), experience(exp) {
+            health = 10*(rand()%10 +1 );
+            type = rand()%3;
         }
         short getExperience() {
             return experience;
         }
-        std::vector<Item> getLoot() {
+        /*std::vector<Item> getLoot() {
             return loot;
-        }
+        }*/
     private:
     protected:
-        short experience;   // to może być niepotrzebne
-        std::vector<Item> loot;
+        short experience;
+        short type;
 };
 
 #endif // HOSTILE_NPC_H

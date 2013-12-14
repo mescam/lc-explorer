@@ -5,11 +5,14 @@
 
 class NPC: public Entity {
     public:
-        NPC(std::string name): Entity(name,"img/NPC.png") {
-        
+        NPC(std::string name, std::string image): Entity(name, image) {
+            primarySprite.setTextureRect(sf::Rect<int>(0, 0, 40, 40));
         }
         short getHealth() {
             return health;
+        }
+        void setHealth(short h) {
+            health = h;
         }
     private:
     protected:
