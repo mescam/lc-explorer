@@ -76,6 +76,7 @@ class Player: public Entity {
         }
         virtual void attack(Field **map) {}
         sf::Vector2f motion;
+        short lookingDirection = 3;
     private:
     protected:
         short maxHealth;
@@ -84,9 +85,7 @@ class Player: public Entity {
         short experience = 0;
         short energy;
         short abilities[6];
-        EProfessions profession;
-
-        
+        EProfessions profession;        
 };
 
 class CArcher: public Player {
@@ -105,7 +104,44 @@ public:
     }
 
     void attack(Field **map) {
-
+        int x = position.x/50;
+        int y = position.y/50;
+        switch(lookingDirection) {
+            case 1:
+                y--;
+                while(map[x][y].state != Obstacle) {
+                    if(map[x][y].state == Enemy) break;
+                    y--;
+                }
+                break;
+            case 2:
+                x++;
+                while(map[x][y].state != Obstacle) {
+                    if(map[x][y].state == Enemy) break;
+                    x++;
+                }
+                break;
+            case 3:
+                y++;
+                while(map[x][y].state != Obstacle) {
+                    if(map[x][y].state == Enemy) break;
+                    y++;
+                }
+                break;
+            case 4:
+                x--;
+                while(map[x][y].state != Obstacle) {
+                    if(map[x][y].state == Enemy) break;
+                    x--;
+                }
+                break;
+        }
+        if(map[x][y].state == Enemy) {
+            HostileNPC *e = dynamic_cast<HostileNPC*>(map[x][y].entity);
+            e->setHealth(e->getHealth() - 10);
+            if(e->getHealth() <= 0)
+                experience += 10;
+        }
     }
 };
 
@@ -125,7 +161,44 @@ public:
     }
 
     void attack(Field **map) {
-
+        int x = position.x/50;
+        int y = position.y/50;
+        switch(lookingDirection) {
+            case 1:
+                y--;
+                while(map[x][y].state != Obstacle) {
+                    if(map[x][y].state == Enemy) break;
+                    y--;
+                }
+                break;
+            case 2:
+                x++;
+                while(map[x][y].state != Obstacle) {
+                    if(map[x][y].state == Enemy) break;
+                    x++;
+                }
+                break;
+            case 3:
+                y++;
+                while(map[x][y].state != Obstacle) {
+                    if(map[x][y].state == Enemy) break;
+                    y++;
+                }
+                break;
+            case 4:
+                x--;
+                while(map[x][y].state != Obstacle) {
+                    if(map[x][y].state == Enemy) break;
+                    x--;
+                }
+                break;
+        }
+        if(map[x][y].state == Enemy) {
+            HostileNPC *e = dynamic_cast<HostileNPC*>(map[x][y].entity);
+            e->setHealth(e->getHealth() - 10);
+            if(e->getHealth() <= 0)
+                experience += 10;
+        }
     }
 };
 
@@ -147,11 +220,9 @@ public:
     virtual void attack(Field **map) {
         for(int i=-1; i <= 1; i++) {
             for(int j=-1; j <= 1; j++) {
-                std::cerr << "Sprawdzam " << i << " " << j << std::endl;
                 int x = int(position.x/50)+i;
                 int y = int(position.y/50)+j;
                 if(map[x][y].state == Enemy) {
-                    std::cerr << "Attack!" << std::endl;
                     HostileNPC *e = dynamic_cast<HostileNPC*>(map[x][y].entity);
                     e->setHealth(e->getHealth()-10);
                     if(e->getHealth() <= 0) {

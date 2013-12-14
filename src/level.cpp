@@ -23,23 +23,9 @@ Level::Level(std::string name, Entity *p) {
 }
 
 void Level::loadLevel(std::string name) {
-    // generowanie ścieżek dla plików levelu
-    std::string infoPath = "levels/" + name + '/' + name + ".nfo"; 
     std::string mapPath = "levels/" + name + '/' + name + ".map"; 
-    std::string dataPath = "levels/" + name + '/' + name + ".dtb"; 
-    // wczytać info o levelu
-    /*
-    std::ifstream infoFile;
-    infoFile.open(infoPath);
-    if(infoFile.is_open()) {
-        
-    } else {
-        // BŁĄD
-        return;
-    }
-    infoFile.close();
-    */
-    // wczytać mapę
+
+    // read map
     std::ifstream mapFile;
     mapFile.open(mapPath);
     if(mapFile.is_open()) {
@@ -107,7 +93,7 @@ void Level::loadLevel(std::string name) {
         }
 
     } else {
-        // BŁĄD
+        // error?
         return;
     }
     mapFile.close();

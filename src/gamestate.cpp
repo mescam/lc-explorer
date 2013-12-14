@@ -85,15 +85,19 @@ void GameState::handleEvents(sf::Event theEvent) {
         switch(theEvent.key.code) {
             case sf::Keyboard::W: // going up
                 player->motion.y = -1;
+                player->lookingDirection = 1;
                 break;
             case sf::Keyboard::S:
                 player->motion.y = 1;
+                player->lookingDirection = 3;
                 break;
             case sf::Keyboard::A:
                 player->motion.x = -1;
+                player->lookingDirection = 4;
                 break;
             case sf::Keyboard::D:
                 player->motion.x = 1;
+                player->lookingDirection = 2;
                 break;
             case sf::Keyboard::Space:
                 player->attack(this->lvl->map);
