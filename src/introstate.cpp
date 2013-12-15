@@ -27,7 +27,7 @@ void IntroState::init() {
     currentLine.setColor(sf::Color(255,255,255,255));
     currentLine.setFont(font);
     currentLine.setString(text[0]);
-    currentLine.setCharacterSize(32);
+    currentLine.setCharacterSize(25);
     centerObject(currentLine, engine->getWindow()->getSize());
 
     initialized = true;
@@ -38,7 +38,7 @@ void IntroState::deinit() {
 }
 
 void IntroState::draw() {
-    if (frameCount/60 > 2) {
+    if (frameCount/60 > 5) {
         lineCount++;
         frameCount = 0;
     }

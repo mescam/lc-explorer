@@ -1,9 +1,12 @@
-Lorem ipsum dolor sit amet,
-consectetur adipiscing elit.
-Fusce porta malesuada ipsum.@Curabitur bibendum volutpat vestibulum.
-Maecenas at mi ac arcu
-ornare feugiat et ac nulla.@Mauris quis malesuada nulla.
-Etiam lacinia,
-quam eu lobortis consectetur,@purus erat pellentesque augue,
-vitae venenatis ipsum
-purus suscipit magna.@Integer eleifend volutpat sapien.
+Dear brother, welcome to my world.
+As you can see, we are in 
+the undergrounds of Lecture Center.@
+Life as Computing Science student is hard,
+you have to deal with many problems,
+it's not for ordinary people.@
+You're special, you have the power
+to overcome every problem you face.
+You will be the one who will pass!@
+Beat them using your special power,
+May the power of NP-completeness 
+be with you.
