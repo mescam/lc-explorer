@@ -7,6 +7,7 @@ class NPC: public Entity {
     public:
         NPC(std::string name, std::string image): Entity(name, image) {
             primarySprite.setTextureRect(sf::Rect<int>(0, 0, 40, 40));
+            centerOrigin(primarySprite);
         }
         short getHealth() {
             return health;

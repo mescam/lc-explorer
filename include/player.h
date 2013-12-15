@@ -51,27 +51,15 @@ class Player: public Entity {
         short getExperience() {
             return experience;
         }
+        void save();
+        void load();
         std::string getProfessionName();
 
-        void setPosition(sf::Vector2f p) {
-            position = p;
-            primarySprite.setPosition(position);
-            if(motion.x == 1) {
-                primarySprite.setTextureRect(sf::IntRect(40*(int(p.x/30)%3), 40, 40, 40));
-            }
-            if(motion.x == -1) {
-                primarySprite.setTextureRect(sf::IntRect(40*(int(p.x/30)%3), 120, 40, 40));
-            }
-            if(motion.y == 1) {
-                primarySprite.setTextureRect(sf::IntRect(40*(int(p.y/30)%3), 0, 40, 40));
-            }
-            if(motion.y == -1) {
-                primarySprite.setTextureRect(sf::IntRect(40*(int(p.y/30)%3), 80, 40, 40));
-            }
-        }
-        virtual void attack(Field **map) {}
-        sf::Vector2f motion;
-        short lookingDirection = 3;
+        void setPosition(sf::Vector2f p);
+        virtual void attack(Field **map) = 0;
+
+        sf::Vector2f motion; //is player in motion?
+        short lookingDirection = 3; //what is his direction
     private:
     protected:
         short maxHealth;
@@ -93,7 +81,7 @@ public:
         this->abilities[Wisdom] = 2;
         this->abilities[Charisma] = 2;
 
-        this->maxHealth = 8;
+        this->maxHealth = 15;
         this->health = this->maxHealth;
         this->profession = EProfessions::Archer;
     }
@@ -111,7 +99,7 @@ public:
         this->abilities[Wisdom] = 5;
         this->abilities[Charisma] = 5;
 
-        this->maxHealth = 6;
+        this->maxHealth = 10;
         this->health = this->maxHealth;
         this->profession = EProfessions::Mage;
     }
@@ -129,7 +117,7 @@ public:
         this->abilities[Wisdom] = 2;
         this->abilities[Charisma] = 3;
 
-        this->maxHealth = 10;
+        this->maxHealth = 25;
         this->health = this->maxHealth;
         this->profession = EProfessions::Knight;
     }

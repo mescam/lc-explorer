@@ -64,11 +64,12 @@ void GameState::init() {
     
     assert(this->player != NULL);
 
-	if(this->lvl == NULL)
+	if(this->lvl == NULL) {
+        std::cerr << "Loading brand new level..." << std::endl;
         this->lvl = new Level("level1", player);
+    }
+    assert(this->lvl != NULL);
 
-
-    //this->lvl->player = this->player;
     this->updatePlayerStatsString();
 	this->initialized = true;
 }
@@ -164,30 +165,24 @@ void GameState::draw() {
     if(lvl->isFinished()) {
         dynamic_cast<EndState*>(engine->getStateManager()->getStateObject(EState::End))->setWinner(true);
         setNewState(EState::End);
+        std::cerr << "End conditions" << std::endl;
     } else if(player->getHealth() <= 0) {
         dynamic_cast<EndState*>(engine->getStateManager()->getStateObject(EState::End))->setWinner(false);
         setNewState(EState::End);
+        std::cerr << "End conditions 2" << std::endl;
     }
-}
-
-bool GameState::load() {
-    if(initialized) {
-        return 0;
-    }
-    initialized = 1;
-    paused = 1;
-    //todo
-    return 0;
 }
 
 bool GameState::save() {
+    this->player->save();
+    this->lvl->save();
     return 0;
 }
 
 void GameState::updatePlayerStatsString() {
     //level and class
     this->guiText[1].setString("Level " 
-        + std::to_string(this->player->getLevel())
+        + std::to_string(this->player->getExperience()/10 + 1)
         + " "
         + this->player->getProfessionName());
 

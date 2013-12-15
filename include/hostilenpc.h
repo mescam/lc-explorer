@@ -2,7 +2,6 @@
 #define HOSTILE_NPC_H
 
 #include "npc.h"
-#include "item.h"
 #include "player.h"
 #include "level.h"
 #include <vector>

@@ -19,8 +19,6 @@ class GameState : public IState {
         void deinit();
         void handleEvents(sf::Event theEvent);
         void draw();
-
-        bool load();
         bool save();
 
     protected:

@@ -5,6 +5,7 @@
 #include <vector>
 
 Level::Level() {
+    mapElements.resize(0);
 }
 
 Level::~Level() {
@@ -13,18 +14,26 @@ Level::~Level() {
         delete[] map[i];
     }
     delete[] map;
+    map = NULL;
+    for(auto mob : mapElements) {
+        delete mob;
+    }
 }
 
-Level::Level(std::string name, Entity *p) {
+Level::Level(std::string name, Entity *p, bool cnew) {
     player = p;
     view = new sf::View();
-    this->loadLevel(name);
-    view->setSize(900, 600);
+    view->reset(sf::FloatRect(0, 0, 900, 600));
+    this->loadLevel(name, cnew);
 }
 
-void Level::loadLevel(std::string name) {
-    std::string mapPath = "levels/" + name + '/' + name + ".map"; 
-
+void Level::loadLevel(std::string name, bool cnew) {
+    std::string mapPath;
+    if(cnew)
+        mapPath = "levels/" + name + '/' + name + ".map"; 
+    else
+        mapPath = name;
+    std::cerr << "Loading level" << std::endl;
     // read map
     std::ifstream mapFile;
     mapFile.open(mapPath);
@@ -59,13 +68,13 @@ void Level::loadLevel(std::string name) {
             
         }
         this->mapSprite.setTexture(this->mapImage);
-        this->mapSprite.setPosition(-50, -50); //don't ask me why...
+        //this->mapSprite.setPosition(-50, -50); //don't ask me why...
         // wczytanie zawartości mapy
         int x,y,state,id;
-        class Player *playerptr = reinterpret_cast<class Player*>(player);
+        //class Player *playerptr = reinterpret_cast<class Player*>(player);
         while (!mapFile.eof()) {
             mapFile >> x >> y >> state >> id;
-            // std::cerr << x << " " << y << " " << state << " " << std::endl;
+            std::cerr << x << " " << y << " " << state << " " << std::endl;
             map[x][y].state = (FieldState)state;
             map[x][y].id = id;
             map[x][y].entity = NULL;
@@ -83,6 +92,7 @@ void Level::loadLevel(std::string name) {
                         "prof" + std::to_string(rand()%7 + 1) + ".png");
                     enemy->setPositionOnMap(x, y);
                     mapElements.push_back(enemy);
+                    std::cerr << mapElements.size() << std::endl;
                     map[x][y].entity = enemy;
                     break;
                 }
@@ -100,16 +110,27 @@ void Level::loadLevel(std::string name) {
     this->loaded = true;
 }
 
+void Level::save() {
+    std::ofstream s("saves/save_map.bin");
+    s << width << " " << height << std::endl;
+    s << "level1.png" << std::endl;
+    for (int i = 0; i < width; i++) {
+        for (int j = 0; j < height; j++) {
+            if(map[i][j].state != Empty) {
+                s << i << " " << j << " " << int(map[i][j].state) << " " << 0 << std::endl;
+                //std::cerr << "Saving entity " << int(map[i][j].state) << " on " << i << " " << j << std::endl;
+            }
+        }
+    }
+    s.close();
+}
+
 bool Level::isLoaded() {
     return this->loaded;
 }
 
 bool Level::isFinished() {
     return mapElements.empty();
-}
-
-void Level::showGrid(bool visible) {
-    this->gridVisible = visible;
 }
 
 void Level::setMapSize(short width, short height) {

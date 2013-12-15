@@ -51,10 +51,7 @@ void StateManager::changeState(EState _new, bool pause) {
     if(_new == active)
         return;
 
-    if(pause)
-        getActiveState()->pause();
-    else
-        getActiveState()->deinit();
+    getActiveState()->deinit();
 
     active = _new; //changed state
 

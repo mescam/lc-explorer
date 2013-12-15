@@ -10,6 +10,7 @@ class MenuState : public IState {
         void deinit();
         void handleEvents(sf::Event theEvent);
         void draw();
+        void loader();
 
     private:
         unsigned short currentMenuItem;

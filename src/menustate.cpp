@@ -1,9 +1,14 @@
 #include "menustate.h"
 #include "engine.h"
 #include "splash.h"
+#include "player.h"
 #include "defaults.h"
+#include "gamestate.h"
+#include "level.h"
 
 #include <SFML/Graphics.hpp>
+
+#include <fstream>
 
 void MenuState::init() {
     currentMenuItem = 0;
@@ -32,6 +37,42 @@ void MenuState::deinit() {
     initialized = false;
 }
 
+void MenuState::loader() { //load
+    //initial loading
+    std::ifstream s("saves/save_player.bin");
+    if(!s.is_open())
+        return;
+
+    int profession;
+    std::string name;
+    s >> profession;
+    s >> name;
+    s.close();
+    //creating and loading player
+    Player* player;
+    switch(profession) {
+        case 0: //archer
+            player = new CArcher(name);
+            break;
+        case 1: //mage
+            player = new CMage(name);
+            break;
+        case 2: //knight
+            player = new CKnight(name);
+            break;
+        default:
+            player = NULL;
+            break;
+    }
+    player->load();
+    dynamic_cast<GameState*>(engine->getStateManager()->getStateObject(EState::Game))->player = player;
+
+    //loading map
+    Level *l = new Level("saves/save_map.bin", player, false);
+    dynamic_cast<GameState*>(engine->getStateManager()->getStateObject(EState::Game))->lvl = l;
+    setNewState(EState::Game);
+}
+
 void MenuState::handleEvents(sf::Event theEvent) {
     if(theEvent.type != sf::Event::KeyPressed)
         return;
@@ -55,16 +96,17 @@ void MenuState::handleEvents(sf::Event theEvent) {
                     this->changeState = true;
                     this->newState = EState::Intro;
                     break;
-                case 1: //load
+                case 1: 
+                    this->loader();
                     break;
                 case 2: //settings
                     break;
                 case 3: //about
-                    setNewState(EState::About);
+                    this->setNewState(EState::About);
                     break;
                 case 4: //exit
                     if (WRITE_TO_LOG) engine->getLogFile()->writeToLog("Exitting application");
-                    exit(0);            // tymczasowo, później to zmienić !!!
+                    exit(0);
                     break;
                 default:
                     break;

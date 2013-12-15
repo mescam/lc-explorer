@@ -14,6 +14,7 @@ class Entity {
             primarySprite.setTexture(eTexture);
             centerOrigin(primarySprite);
         }
+        virtual ~Entity() {};
         // virtual void draw() {};
         std::string getName() {
             return name;
@@ -36,9 +37,9 @@ class Entity {
             w->draw(primarySprite);
         }
       
-        // virtual void getHealth() {
-        //     return 10;
-        // }
+        virtual short getHealth() {
+            return 10;
+        }
     private:
     protected:
         sf::Sprite primarySprite;

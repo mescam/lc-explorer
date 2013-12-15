@@ -28,17 +28,18 @@ struct Field {
 
 class Level {
 public:
-    Level(std::string name, Entity *p);
+    Level(std::string name, Entity *p, bool cnew = true);
     ~Level();
-    void loadLevel(std::string name);
+    void loadLevel(std::string name, bool cnew);
     bool isLoaded();
-    void showGrid(bool visible);     // turn on/off grid on map
     void setMapSize(short width, short height);      // set map size (in tiles)
     short getMapWidth();
     short getMapHeight();
     Field& getMapField(int x, int y);
     void draw(sf::RenderWindow *w);
     bool isFinished();
+    void save();
+    void load();
     Entity *player = NULL;
     Field** map;
 private:
