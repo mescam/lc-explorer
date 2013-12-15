@@ -26,7 +26,7 @@ dominik.galewski@student.put.edu.pl & jakub.l.wozniak@student.put.edu.pl
 Wydział Informatyki Politechniki Poznańskiej
 \end{center}}
 \author{\authorthing}
-\date{18 listopada 2013}
+\date{16 grudnia 2013}
 \postauthor{}
 \title{Trouble in Lecture Center\\\small{\MakeUppercase{Gra dungeon explorer}}\\\Large{Laboratorium Programowania Obiektowego}}
 \marginsize{2cm}{2cm}{1cm}{1cm}
@@ -46,11 +46,11 @@ Wydział Informatyki Politechniki Poznańskiej
 Projekt został napisany w języku C++ (standard C++11) przy użyciu biblioteki \textit{SFML} (http://sfml-dev.org) w wersji 2.0. Do kompilacji wymagany jest kompilator g++ w wersji 4.8. Dostarczony plik \textit{Makefile} pozwala na skompilowanie projektu przy pomocy polecenia \textit{make}. Plik wynikowy znajduje się w katalogu \textit{bin}. Program należy uruchomić bedąc w katalogu \textit{bin/}, w przeciwnym razie nie zostaną załadowane pliki z grafiką, itp.
 
 \subsection{Podział klas}
-Rysunek \ref{uml-game} przedstawia podział klas związanych z rozgrywką. Główną klasę stanowi \textit{Entity}, która reprezentuje wszystkie elementy w grze, które mogą być narysowane na mapie. Klasa NPC przedstawia postacie sterowane przez komputer, obecnie istnieje tylko jedna klasa pochodna - \textit{HostileNPC}, które reprezentuje postacie wrogie użytkownikowi. Klasa \textit{Player} odpowiada za reprezentowanie postaci gracza w grze, dzieli się na 3 klasy pochodne, które są profesjami postaci.
+Rysunek \ref{uml-game} przedstawia podział klas związanych z rozgrywką. Główną klasę stanowi \textit{Entity}, która reprezentuje wszystkie elementy w grze, które mogą być narysowane na mapie. Klasa NPC przedstawia postacie sterowane przez komputer, obecnie istnieje tylko jedna klasa pochodna - \textit{HostileNPC}, które reprezentuje postacie wrogie użytkownikowi. Klasa \textit{Player} odpowiada za reprezentowanie postaci gracza w grze, dzieli się na 3 klasy pochodne, które są profesjami postaci. \textit{DMG} --- wyświetla zadane obrażenia na mapie.
 
 Rysynek \ref{uml-game2} przedstawia zależność klas związanych z logiką gry, głównie reprezentuje klasę \textit{IState} i jej klasy pochodne --- odpowiednie stany w których gra może się znajdować (splash, tworzenie postaci, intro, menu, gra właściwa, zakończenie). Dodatkowo, klasa \textit{GameState} zawiera pole typu \textit{Level} będące obiektem reprezentującym aktualnie rozgrywany poziom.
 
-Rysunek \ref{uml-game3} przedstawia pozostałe klasy: \textit{Engine} --- zawierająca logikę uruchomienia i utrzymania pętli zdarzeń wraz z przekazywaniem kontroli do stanów, \textit{Log} --- prosty interfejs do zapisywania logu, \textit{StateManager} --- maszyna stanów, odpowiadająca za przechowywanie i zarządzanie obiektami stanów gry.
+Rysunek \ref{uml-game3} przedstawia pozostałe klasy: \textit{Engine} --- zawierająca logikę uruchomienia i utrzymania pętli zdarzeń wraz z przekazywaniem kontroli do stanów, \textit{Log} --- prosty interfejs do zapisywania logu, \textit{StateManager} --- maszyna stanów, odpowiadająca za przechowywanie i zarządzanie obiektami stanów gry, \textit{SoundManager} --- klasa zarządzająca dźwiękiem w grze.
 
 \begin{figure}
     \centering
