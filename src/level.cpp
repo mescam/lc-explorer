@@ -119,7 +119,6 @@ void Level::save() {
         for (int j = 0; j < height; j++) {
             if(map[i][j].state != Empty) {
                 s << i << " " << j << " " << int(map[i][j].state) << " " << 0 << std::endl;
-                //std::cerr << "Saving entity " << int(map[i][j].state) << " on " << i << " " << j << std::endl;
             }
         }
     }
