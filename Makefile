@@ -1,6 +1,6 @@
 CC	= g++
 CFLAGS	= -Wall -std=c++11 -I include/ -g
-LFLAGS	= -std=c++11 -I include/ -L/usr/local/lib -lsfml-graphics -lsfml-window -lsfml-system -g
+LFLAGS	= -std=c++11 -I include/ -L/usr/local/lib -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -g
 LINKER	= g++ -o
 
 TARGET	= lc-explorer

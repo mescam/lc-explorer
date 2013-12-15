@@ -2,12 +2,14 @@
 #define LEVEL_H
 
 #include "entity.h"
+#include "soundmanager.h"
 
 #include <fstream>
 #include <string>
 #include <sstream>
 #include <vector>
 #include <iostream>
+
 
 #include <SFML/Graphics.hpp>
 
@@ -28,7 +30,7 @@ struct Field {
 
 class Level {
 public:
-    Level(std::string name, Entity *p, bool cnew = true);
+    Level(std::string name, Entity *p, bool cnew, SoundManager *snd);
     ~Level();
     void loadLevel(std::string name, bool cnew);
     bool isLoaded();
@@ -42,6 +44,7 @@ public:
     void load();
     Entity *player = NULL;
     Field** map;
+    std::vector<Entity*> mapElements;
 private:
     short width;
     short height;
@@ -49,9 +52,9 @@ private:
     bool loaded = false;
     sf::Texture mapImage;
     sf::Sprite mapSprite;
-    std::vector<Entity*> mapElements;
     sf::View *view;
     int counter = 0;
+    SoundManager *sm;
     Level();
 protected:
 };

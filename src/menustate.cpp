@@ -68,7 +68,7 @@ void MenuState::loader() { //load
     dynamic_cast<GameState*>(engine->getStateManager()->getStateObject(EState::Game))->player = player;
 
     //loading map
-    Level *l = new Level("saves/save_map.bin", player, false);
+    Level *l = new Level("saves/save_map.bin", player, false, engine->getSoundManager());
     dynamic_cast<GameState*>(engine->getStateManager()->getStateObject(EState::Game))->lvl = l;
     setNewState(EState::Game);
 }

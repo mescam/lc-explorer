@@ -4,6 +4,8 @@
 #include "entity.h"
 #include <string>
 #include "level.h"
+#include "soundmanager.h"
+#include "dmg.h"
 
 
 enum class EProfessions {
@@ -56,7 +58,7 @@ class Player: public Entity {
         std::string getProfessionName();
 
         void setPosition(sf::Vector2f p);
-        virtual void attack(Field **map) = 0;
+        virtual DMG* attack(Field **map) = 0;
 
         sf::Vector2f motion; //is player in motion?
         short lookingDirection = 3; //what is his direction
@@ -86,7 +88,7 @@ public:
         this->profession = EProfessions::Archer;
     }
 
-    void attack(Field **map);
+    DMG* attack(Field **map);
 };
 
 class CMage: public Player {
@@ -104,7 +106,7 @@ public:
         this->profession = EProfessions::Mage;
     }
 
-    void attack(Field **map);
+    DMG* attack(Field **map);
 };
 
 class CKnight: public Player {
@@ -122,7 +124,7 @@ public:
         this->profession = EProfessions::Knight;
     }
 
-    void attack(Field **map);
+    DMG* attack(Field **map);
 };
 
 #endif // PLAYER_H

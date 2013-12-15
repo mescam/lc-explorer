@@ -2,6 +2,7 @@
 #define ENTITY_H
 
 #include "splash.h"
+#include "soundmanager.h"
 
 #include <string>
 #include <SFML/Graphics.hpp>
@@ -40,12 +41,17 @@ class Entity {
         virtual short getHealth() {
             return 10;
         }
+
+        void setSoundManager(SoundManager *snd) {
+            sm = snd;
+        }
     private:
     protected:
         sf::Sprite primarySprite;
         std::string name;
         sf::Texture eTexture;
         sf::Vector2f position;
+        SoundManager *sm;
 };
 
 #endif // ENTITY_H

@@ -1,5 +1,6 @@
 #include "engine.h"
 #include "statemanager.h"
+#include "soundmanager.h"
 #include "state.h"
 #include "defaults.h"
 
@@ -13,6 +14,7 @@ Engine::Engine() {
 
 void Engine::initializeManagers() {
     statemanager = new StateManager(this);
+    soundmanager = new SoundManager();
     statemanager->getActiveState()->init();
 }
 
@@ -49,4 +51,13 @@ Log* Engine::getLogFile() {
 
 StateManager* Engine::getStateManager() {
     return statemanager;
+}
+
+SoundManager* Engine::getSoundManager() {
+    return soundmanager;
+}
+
+Engine::~Engine() {
+    delete statemanager;
+    delete soundmanager;
 }

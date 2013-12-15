@@ -5,7 +5,6 @@
 #include <vector>
 
 Level::Level() {
-    mapElements.resize(0);
 }
 
 Level::~Level() {
@@ -20,10 +19,11 @@ Level::~Level() {
     }
 }
 
-Level::Level(std::string name, Entity *p, bool cnew) {
+Level::Level(std::string name, Entity *p, bool cnew, SoundManager *snd) {
     player = p;
     view = new sf::View();
     view->reset(sf::FloatRect(0, 0, 900, 600));
+    sm = snd;
     this->loadLevel(name, cnew);
 }
 
@@ -74,7 +74,7 @@ void Level::loadLevel(std::string name, bool cnew) {
         //class Player *playerptr = reinterpret_cast<class Player*>(player);
         while (!mapFile.eof()) {
             mapFile >> x >> y >> state >> id;
-            std::cerr << x << " " << y << " " << state << " " << std::endl;
+            //std::cerr << x << " " << y << " " << state << " " << std::endl;
             map[x][y].state = (FieldState)state;
             map[x][y].id = id;
             map[x][y].entity = NULL;
@@ -85,14 +85,15 @@ void Level::loadLevel(std::string name, bool cnew) {
                     break;
                 }
                 case Enemy: {
-                    std::cerr << "found enemy" << std::endl;
+                    //std::cerr << "found enemy" << std::endl;
                     HostileNPC *enemy = new HostileNPC(
                         "Professor",
                         20,
                         "prof" + std::to_string(rand()%7 + 1) + ".png");
+                    enemy->setSoundManager(sm);
                     enemy->setPositionOnMap(x, y);
                     mapElements.push_back(enemy);
-                    std::cerr << mapElements.size() << std::endl;
+                    //std::cerr << mapElements.size() << std::endl;
                     map[x][y].entity = enemy;
                     break;
                 }
@@ -117,7 +118,7 @@ void Level::save() {
     for (int i = 0; i < width; i++) {
         for (int j = 0; j < height; j++) {
             if(map[i][j].state != Empty) {
-                s << i << " " << j << " " << int(map[i][j].state) << " " << 0 << std::endl;
+                //s << i << " " << j << " " << int(map[i][j].state) << " " << 0 << std::endl;
                 //std::cerr << "Saving entity " << int(map[i][j].state) << " on " << i << " " << j << std::endl;
             }
         }
@@ -170,11 +171,18 @@ void Level::draw(sf::RenderWindow *w) {
                 map[x][y].state = Empty;
                 map[x][y].entity = NULL;
                 toRemove.push_back(it);
+                sm->play(Dead);
             } else {
                 // std::cerr << "NPC interacts" << std::endl;
-                npc->interact(p, map);
+                DMG* d = npc->interact(p, map);
+                if(d != NULL) {
+                    mapElements.push_back(d);
+                }
             }
-        } 
+        }else{
+            if((*it)->getHealth() <= 0)
+                toRemove.push_back(it);
+        }
         (*it)->draw(w);
     }
     

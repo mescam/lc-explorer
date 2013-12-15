@@ -4,6 +4,7 @@
 #include "npc.h"
 #include "player.h"
 #include "level.h"
+#include "dmg.h"
 #include <vector>
 
 class HostileNPC : public NPC {
@@ -16,7 +17,7 @@ public:
         return experience;
     }
 
-    void interact(Player *p, Field** map);
+    DMG* interact(Player *p, Field** map);
     void setPosition(sf::Vector2f p);
 private:
 protected:

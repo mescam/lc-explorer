@@ -2,6 +2,7 @@
 #include "defaults.h"
 #include "gamestate.h"
 #include "endstate.h"
+#include "dmg.h"
 #include <iostream>
 #include <cassert>
 
@@ -63,10 +64,11 @@ void GameState::init() {
     this->guiText[9].setPosition(10,195);
     
     assert(this->player != NULL);
+    this->player->setSoundManager(engine->getSoundManager());
 
 	if(this->lvl == NULL) {
         std::cerr << "Loading brand new level..." << std::endl;
-        this->lvl = new Level("level1", player);
+        this->lvl = new Level("level1", player, true, engine->getSoundManager());
     }
     assert(this->lvl != NULL);
 
@@ -101,9 +103,13 @@ void GameState::handleEvents(sf::Event theEvent) {
                 player->motion.x = 1;
                 player->lookingDirection = 2;
                 break;
-            case sf::Keyboard::Space:
-                player->attack(this->lvl->map);
+            case sf::Keyboard::Space: {
+                DMG* dmg = player->attack(this->lvl->map);
+                if(dmg != NULL) {
+                    this->lvl->mapElements.push_back(dmg);
+                }
                 break;
+            }
             case sf::Keyboard::F5:
                 this->save();
                 break;
