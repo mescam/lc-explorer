@@ -42,12 +42,12 @@ void Level::loadLevel(std::string name, bool cnew) {
         
         std::cerr << "h: " << this->height << "    w: " << this->width << std::endl;
 
-        // utworzenie dynamicznej tablicy
+        // create dynamic array
         this->map = new Field* [width];
         for (int i = 0; i < width; i++) {
             map[i] = new Field [height];
         }
-        // wypełnienie jej pustymi polami
+        // fill it with empty fields
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 map[i][j].state = Empty;
@@ -55,7 +55,7 @@ void Level::loadLevel(std::string name, bool cnew) {
             }
         }
         std::cerr << "Dynamic map is created" << std::endl;
-        // wczytanie grafiki mapy
+        // load map graphics
         std::string temp;
         //getline(mapFile,temp);
         mapFile >> temp;
@@ -69,7 +69,7 @@ void Level::loadLevel(std::string name, bool cnew) {
         }
         this->mapSprite.setTexture(this->mapImage);
         //this->mapSprite.setPosition(-50, -50); //don't ask me why...
-        // wczytanie zawartości mapy
+        // read map content
         int x,y,state,id;
         //class Player *playerptr = reinterpret_cast<class Player*>(player);
         while (!mapFile.eof()) {
@@ -162,59 +162,43 @@ void Level::draw(sf::RenderWindow *w) {
     Player *p = dynamic_cast<Player*>(player);
     // draw other entities
     HostileNPC *npc;
-    //std::vector<std::vector<Entity*>::iterator> toRemove; //oh god...
+    std::vector<Entity*> newElements;
     for(auto it = mapElements.begin(); it != mapElements.end(); it++) {
-        //printf("before dynamic %p\n", *it);
         npc = dynamic_cast<HostileNPC*>(*it);
-        //printf("here %p %p\n", *it, npc);
         if(npc != NULL) {
-            //printf("after1\n");
-            if(npc->getHealth() <= 0) {
+            if(npc->getHealth() <= 0) { //if entity is dead
                 int x = npc->getPosition().x/50, y = npc->getPosition().y/50;
                 map[x][y].state = Empty;
                 map[x][y].entity = NULL;
-                //toRemove.push_back(it);
                 if(!npc->dead) {
-                    sm->play(Dead);
+                    sm->play(Dead); //play some music
                     npc->dead = 1;
                 }
                 continue;
             } else {
-                // std::cerr << "NPC interacts" << std::endl;
-                DMG* d = npc->interact(p, map);
+                DMG* d = npc->interact(p, map); //make our mob alive
                 if(d != NULL) {
                     mapElements.push_back(d);
-                    //delete d;
                 }
+                newElements.push_back(*it);
             }
         }else{
-            //printf("after2\n");
             if((*it)->getHealth() <= 0)
-                //toRemove.push_back(it);
                 continue;
-            //printf("after push\n");
+            newElements.push_back(*it);
         }
         (*it)->draw(w);
-        //printf("after draw\n");
-    }
-    
-    //remove dead entities
-    //printf("before dead\n");
-    /*for(auto it : toRemove) {
-        //printf("removing %p\n", p);
-        delete *it;
-        mapElements.erase(it);
-    }*/
-    //printf("after dead\n");
 
-    //add health every one second
+    }
+    mapElements = newElements;
+    //add more health every 60 frames
     counter++;
     if(counter == 60) {
         if(p->getHealth() < p->getMaxHealth())
             p->setHealth(p->getHealth()+1);
         counter = 0;
     }
-    //printf("after health++\n");
+
 
     //grid
     // for(int x = 0; x < view->getSize().x; x+=50) {

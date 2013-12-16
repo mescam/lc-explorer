@@ -7,7 +7,7 @@ Player::Player(std::string name, std::string image): Entity(name,image) {
 }
 
 
-void Player::setPosition(sf::Vector2f p) {
+void Player::setPosition(sf::Vector2f p) { //set position on screen and select texture frame
     position = p;
     primarySprite.setPosition(position);
     if(motion.x == 1) {

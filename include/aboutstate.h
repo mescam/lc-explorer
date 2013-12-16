@@ -17,10 +17,10 @@ class AboutState : public IState {
         void draw();
 
     private:
-    	sf::Texture *wall;
-    	sf::Sprite *spriteWall;
-    	sf::Font *font;
-    	std::vector<sf::Text> desc;
+    	sf::Texture *wall; //texture of wall
+    	sf::Sprite *spriteWall; //sprite for wall
+    	sf::Font *font; //default font
+    	std::vector<sf::Text> desc; //description of our game
 
 };
 

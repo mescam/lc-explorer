@@ -14,17 +14,17 @@ class CreatePlayerState : public IState {
         void draw();
 
     private:
-        sf::Sprite *wallBackground;
+        sf::Sprite *wallBackground; //assets for background
         sf::Texture *tWallBackground;
         sf::Font *font;
-        sf::Text *tName;
-        sf::Text *hintName;
-        sf::Text *welcome;
-        std::string name;
-        std::vector<std::string> professions;
-        unsigned int selectedProfession;
+        sf::Text *tName; //name of player
+        sf::Text *hintName; //prompt?
+        sf::Text *welcome; //welcome text
+        std::string name; //storage for input
+        std::vector<std::string> professions; //available professions
+        unsigned int selectedProfession; //selected profession
 
-        void drawProfessions();
+        void drawProfessions(); //draw professions on screen
 };
 
 #endif

@@ -11,7 +11,7 @@ class HostileNPC : public NPC {
 public:
     HostileNPC(std::string name, short exp, std::string image): NPC(name, image), experience(exp) {
         health = 10*(rand()%10 +1 );
-        type = rand()%3;
+        type = rand()%3; //rand... :X
     }
     short getExperience() {
         return experience;
@@ -19,7 +19,7 @@ public:
 
     DMG* interact(Player *p, Field** map);
     void setPosition(sf::Vector2f p);
-    int dead = 0;
+    int dead = 0; //if he is dead?
 private:
 protected:
     short experience;

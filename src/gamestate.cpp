@@ -91,15 +91,15 @@ void GameState::handleEvents(sf::Event theEvent) {
                 player->motion.y = -1;
                 player->lookingDirection = 1;
                 break;
-            case sf::Keyboard::S:
+            case sf::Keyboard::S: //down
                 player->motion.y = 1;
                 player->lookingDirection = 3;
                 break;
-            case sf::Keyboard::A:
+            case sf::Keyboard::A: //left
                 player->motion.x = -1;
                 player->lookingDirection = 4;
                 break;
-            case sf::Keyboard::D:
+            case sf::Keyboard::D: //right
                 player->motion.x = 1;
                 player->lookingDirection = 2;
                 break;
@@ -107,7 +107,6 @@ void GameState::handleEvents(sf::Event theEvent) {
                 DMG* dmg = player->attack(this->lvl->map);
                 if(dmg != NULL) {
                     this->lvl->mapElements.push_back(dmg);
-                    //delete dmg;
                 }
                 break;
             }

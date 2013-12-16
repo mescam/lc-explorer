@@ -12,7 +12,7 @@ Engine::Engine() {
     }
 }
 
-void Engine::initializeManagers() {
+void Engine::initializeManagers() { //initializes all managers
     statemanager = new StateManager(this);
     soundmanager = new SoundManager();
     statemanager->getActiveState()->init();
@@ -26,21 +26,23 @@ void Engine::createGameWindow() {
 void Engine::mainLoop() {
     while(window.isOpen()) {
         sf::Event event;
-        while(window.pollEvent(event)) {
+        while(window.pollEvent(event)) { //get event from event queue
             if (event.type == sf::Event::Closed)
                 window.close();
             else
-                statemanager->getActiveState()->handleEvents(event);
+                statemanager->getActiveState()->handleEvents(event); //handle it in correct state
         }
-        if(statemanager->getActiveState()->shouldChangeState()) {
-            statemanager->changeState(statemanager->getActiveState()->getNewState());
+        if(statemanager->getActiveState()->shouldChangeState()) { //check need of state change
+            statemanager->changeState(statemanager->getActiveState()->getNewState()); //change it
         }
-        window.clear();
-        statemanager->getActiveState()->draw();
-        window.display();
+        window.clear(); //paint it black
+        statemanager->getActiveState()->draw(); //draw everything from active state
+        window.display(); //display from buffer
     }
 }
 
+
+//simple getters below
 sf::RenderWindow *Engine::getWindow() {
     return &window;
 }

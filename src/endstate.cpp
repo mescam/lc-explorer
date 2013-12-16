@@ -2,6 +2,10 @@
 #include "splash.h"
 #include "engine.h"
 
+
+//nothing special here
+//so nothing worth mentioning
+
 EndState::EndState(Engine *_engine) {
     engine = _engine;
     backgroundImg.loadFromFile("images/wall_clean.png"); 

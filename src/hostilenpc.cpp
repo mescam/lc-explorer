@@ -7,7 +7,6 @@ DMG* HostileNPC::interact(Player *p, Field** map) {
             return 0;
         }
         int x = position.x/50, y = position.y/50;
-        // std::cerr << "Thinking about beating someone" << std::endl;
         for(int i = -1; i <= 1; i++) { //for each of neighbour fields
             for(int j = -1; j <= 1; j++) {
                 if(map[x+i][y+j].state == Character) { //if there is a character nearby
@@ -15,7 +14,7 @@ DMG* HostileNPC::interact(Player *p, Field** map) {
                     int dmg = rand()%(p->getMaxHealth()/2);
                     p->setHealth(p->getHealth()-dmg);
                     coolOff = 60; // and rest
-                    o = NULL;//new DMG(dmg, false, p->getPosition());
+                    o = new DMG(dmg, false, p->getPosition());
                     return o;
                 }
             }
@@ -24,7 +23,6 @@ DMG* HostileNPC::interact(Player *p, Field** map) {
         if(!destinationSet) { //if there is no destination point for him
             for(int i = -1; i <= 1; i++) {
                 for(int j = -1; j <= 1; j++) {
-                    //if((x+i) < 0 || (x+i) > 71 || (y+j) < 0 || (y+j) > 62) return NULL;
                     if(map[x+i][y+j].state == Empty && rand()%100 < 5) { //maybe it could be good
                         destination = sf::Vector2f((x+i)*50+20, (y+j)*50+20); //set it!
                         destinationSet = true;

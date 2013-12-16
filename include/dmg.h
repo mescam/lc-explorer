@@ -5,6 +5,7 @@
 
 class DMG : public Entity {
     public:
+        // generates simple text with dealed damage
         DMG(short val, bool attack, sf::Vector2f position) : Entity("dmg", "dummy.png") {
             font.loadFromFile("fonts/Minecraftia.ttf");
             this->val = val;
@@ -32,7 +33,7 @@ class DMG : public Entity {
         }
 
     private:
-        short life = 60;
+        short life = 60; //yeah, it has life :D
         short val;
         sf::Color c;
         sf::Font font;
