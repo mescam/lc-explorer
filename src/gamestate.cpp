@@ -107,6 +107,7 @@ void GameState::handleEvents(sf::Event theEvent) {
                 DMG* dmg = player->attack(this->lvl->map);
                 if(dmg != NULL) {
                     this->lvl->mapElements.push_back(dmg);
+                    //delete dmg;
                 }
                 break;
             }

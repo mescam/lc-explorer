@@ -19,6 +19,7 @@ public:
 
     DMG* interact(Player *p, Field** map);
     void setPosition(sf::Vector2f p);
+    int dead = 0;
 private:
 protected:
     short experience;

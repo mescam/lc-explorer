@@ -158,37 +158,54 @@ void Level::draw(sf::RenderWindow *w) {
     w->draw(this->mapSprite);
     // draw player
     this->player->draw(w);
+    //printf("rysuje\n");
     Player *p = dynamic_cast<Player*>(player);
     // draw other entities
     HostileNPC *npc;
-    std::vector<std::vector<Entity*>::iterator> toRemove; //oh god...
+    //std::vector<std::vector<Entity*>::iterator> toRemove; //oh god...
     for(auto it = mapElements.begin(); it != mapElements.end(); it++) {
+        //printf("before dynamic %p\n", *it);
         npc = dynamic_cast<HostileNPC*>(*it);
+        //printf("here %p %p\n", *it, npc);
         if(npc != NULL) {
+            //printf("after1\n");
             if(npc->getHealth() <= 0) {
                 int x = npc->getPosition().x/50, y = npc->getPosition().y/50;
                 map[x][y].state = Empty;
                 map[x][y].entity = NULL;
-                toRemove.push_back(it);
-                sm->play(Dead);
+                //toRemove.push_back(it);
+                if(!npc->dead) {
+                    sm->play(Dead);
+                    npc->dead = 1;
+                }
+                continue;
             } else {
                 // std::cerr << "NPC interacts" << std::endl;
                 DMG* d = npc->interact(p, map);
                 if(d != NULL) {
                     mapElements.push_back(d);
+                    //delete d;
                 }
             }
         }else{
+            //printf("after2\n");
             if((*it)->getHealth() <= 0)
-                toRemove.push_back(it);
+                //toRemove.push_back(it);
+                continue;
+            //printf("after push\n");
         }
         (*it)->draw(w);
+        //printf("after draw\n");
     }
     
     //remove dead entities
-    for(auto it : toRemove) {
+    //printf("before dead\n");
+    /*for(auto it : toRemove) {
+        //printf("removing %p\n", p);
+        delete *it;
         mapElements.erase(it);
-    }
+    }*/
+    //printf("after dead\n");
 
     //add health every one second
     counter++;
@@ -197,6 +214,7 @@ void Level::draw(sf::RenderWindow *w) {
             p->setHealth(p->getHealth()+1);
         counter = 0;
     }
+    //printf("after health++\n");
 
     //grid
     // for(int x = 0; x < view->getSize().x; x+=50) {
